@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/InitialPage.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 863817fadeee1d04dab1f455adaaa697
+  - enabled: 1
+    path: Assets/Scenes/Paint/PaintPage3.unity
+    guid: b7dc490197996414489aed2dfbbbdaa4
+  - enabled: 1
+    path: Assets/Scenes/FoodQuizPage.unity
+    guid: 7803109ccb179a2448c889ce17feefd6
+  - enabled: 1
+    path: Assets/Scenes/WashHands/WashHandsObjectsPage.unity
+    guid: e144366d66525984d9808319d865d500
+  - enabled: 1
+    path: Assets/Scenes/TrueFalsePage.unity
+    guid: 0c538cffafeba4740980dcd9164facbf
+  - enabled: 1
+    path: Assets/Scenes/QuizPage.unity
+    guid: 002fcf09abc094146bdf1f88a2198161
+  - enabled: 1
+    path: Assets/Scenes/DragDropPage.unity
+    guid: 6c617eaeb0ef17a4997ce7beb87fc1c8
+  - enabled: 1
+    path: Assets/Scenes/DragSequencePage.unity
+    guid: ff5c6dfc448ecdd49a959a82bdd6962a
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage.unity
+    guid: a402db39c49bcc6438ba24357c7237f0
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage2.unity
+    guid: 56d4a8541a696a44186d43f9ebc91d83
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage3.unity
+    guid: ff94df3fae9808f49af2200c4eb78c23
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage4.unity
+    guid: 4fe4ade92f9e78147a3e6e7a12d57ca0
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage5.unity
+    guid: 5a885fd1f20afbc439671b8c58fcb0f0
+  - enabled: 1
+    path: Assets/Scenes/WashHands/CleaningMeterPage.unity
+    guid: b8ceebb5e1a7c644a83a117f694bb247
+  - enabled: 1
+    path: Assets/Scenes/WashHands/WashHandsGamePage.unity
+    guid: a822a7baa1217794b97ea32c8db1b80c
+  - enabled: 1
+    path: Assets/Scenes/Speech/HandSpeechBubblePage1.unity
+    guid: 9fcd905e558459f458395f44deff700f
+  - enabled: 1
+    path: Assets/Scenes/Speech/HandSpeechBubblePage2.unity
+    guid: 747ac89273746f642ba08a608ccdff31
+  - enabled: 1
+    path: Assets/Scenes/Paint/PaintPage2.unity
+    guid: 99776657dc7e70f4488f95bc32b1bd13
+  - enabled: 1
+    path: Assets/Scenes/Paint/PaintPage1.unity
+    guid: 9f7cc2a2578c2914186a54b08b37ced9
+  - enabled: 1
+    path: Assets/Scenes/BonusScenes/Bonus3.unity
+    guid: ca39fb753bac64d4b839a07306539964
+  - enabled: 1
+    path: Assets/Scenes/BonusScenes/Bonus2.unity
+    guid: cb75685a38599d541b5058a0c679abaa
+  - enabled: 1
+    path: Assets/Scenes/BonusScenes/Bonus1.unity
+    guid: 7354b0e9f93d4e84397367ee929c66b7
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage6.unity
+    guid: c7c0ecddeff56e64e9ef28945eebccea
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage7.unity
+    guid: 1b3d2e222a5eb324baec5f4f7c628d3e
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage8.unity
+    guid: f790af6945f2a4346822e2f1dd3757d0
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage9.unity
+    guid: d68c6a5958a464c49b9cd84a57c35185
+  - enabled: 1
+    path: Assets/Scenes/Characters/CharacterPage1.unity
+    guid: b4e27805430b73640b528845cd90c3b0
+  - enabled: 1
+    path: Assets/Scenes/Characters/CharacterPage2.unity
+    guid: 6a2c2075b2e28ce47b296d21ede74a24
+  - enabled: 1
+    path: Assets/Scenes/Characters/CharacterPage3.unity
+    guid: e0f3d3b442204034db6c364af9b896c2
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage1.unity
+    guid: 043041956fdd32f49b816019da701472
+  - enabled: 1
+    path: Assets/Scenes/Awards/Award00.unity
+    guid: 1b492ee8c04aad349897b1cfe5d6bca2
+  - enabled: 1
+    path: Assets/Scenes/Awards/Award01.unity
+    guid: bd23e74bf9038674a918ef2958646dc7
+  - enabled: 1
+    path: Assets/Scenes/Awards/Award02.unity
+    guid: 124f779710f2cf0469615ae8f99e598a
+  - enabled: 1
+    path: Assets/Scenes/Characters/CharacterPage4.unity
+    guid: fb9ed6ba6b6105045a7ef0f3896bc93c
+  - enabled: 1
+    path: Assets/Scenes/TesteCriarPlayers.unity
+    guid: 7cc85b56619f97443a4e4bdb9e1681a3
+  m_configObjects: {}
