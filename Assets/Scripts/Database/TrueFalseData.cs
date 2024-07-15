@@ -7,12 +7,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
-
-
-
 public class TrueFalseData : MonoBehaviour
 {
+    private const int MAXSCORE = 1250;
+    private const int ADDSCORE = 250;
+
+    public Image ScoreTable;
+    public GameObject[] Stars;
+    public GameObject[] Medals;
+    public Text scoreText;
+    public Button scoreButton;
+
+    private int totalScore;
 
     public GameObject BallonAnimation;
     public GameObject SadFace;
@@ -35,32 +41,26 @@ public class TrueFalseData : MonoBehaviour
 
     void Start()
     {
+        totalScore = PlayerPrefs.GetInt("QuizScore", 0);
+        Debug.Log("Loaded Quiz Total Score>>>>>>>>>>: " + totalScore);
+
+        HidePopup();
         originalColor = TrueText.color;
         UIAnimationsDisable();
         getTotalQuestions();
         OnGetQuestion();
     }
 
-   /* public void OnSubmit()
+    private void Update()
     {
-        playerName = nameText.text;
-        PostToDatabase();
-    }*/
+        // Atualiza o valor do totalScore a partir do PlayerPrefs sempre que for chamado
+        totalScore = PlayerPrefs.GetInt("QuizScore", 0);
+    }
 
     public void OnGetQuestion()
     {
         questionText.text = PlayerPrefs.GetString("TrueFalseQuestion" + questionIndex);
     }
-
-
-    //private void PostToDatabase()
-    //{
-    //    User user = new User();
-    //    RestClient.Put("https://renal-ped-f3573-default-rtdb.firebaseio.com/" + playerName + ".json", user);
-    //}
-
-
-
 
     private void UIAnimationsDisable()
     {
@@ -70,9 +70,6 @@ public class TrueFalseData : MonoBehaviour
         FadeOut.SetActive(false);
     }
 
-
-
-
     public void CheckTrueButton()
     {
         questionAnswer = PlayerPrefs.GetString("TrueFalseAnswer" + questionIndex);
@@ -81,13 +78,13 @@ public class TrueFalseData : MonoBehaviour
         {
             BallonAnimation.SetActive(true);
             TrueText.color = Color.green;
-            ScoreManager.Instance.AddTrueFalseScore(1, 1);/////////////////////////////////////////////
+            ScoreManager.Instance.AddQuizScore(MAXSCORE, ADDSCORE); // Atualiza o score
             Debug.Log("Acertou! A resposta é verdadeira");
         }
         else
         {
             SadFace.SetActive(true);
-            TrueText.color= Color.red;
+            TrueText.color = Color.red;
             Debug.Log("Errou:( A resposta é falsa");
         }
 
@@ -102,18 +99,17 @@ public class TrueFalseData : MonoBehaviour
         {
             BallonAnimation.SetActive(true);
             FalseText.color = Color.green;
-            ScoreManager.Instance.AddTrueFalseScore(1, 1);////////////////////////////////////////
+            ScoreManager.Instance.AddQuizScore(MAXSCORE, ADDSCORE); // Atualiza o score
             Debug.Log("Acertou! A resposta é falsa");
         }
         else
         {
             SadFace.SetActive(true);
-            FalseText.color= Color.red;
+            FalseText.color = Color.red;
             Debug.Log("Errou. A resposta é verdadeira");
         }
 
         StartCoroutine(WaitAndGoToNextQuestion());
-
     }
 
     public void nextTrueFalseQuestion()
@@ -125,17 +121,14 @@ public class TrueFalseData : MonoBehaviour
 
         if (numOfTFQuestions > questionIndex)
         {
-            if(questionIndex == numOfTFQuestions - 1)
+            if (questionIndex == numOfTFQuestions - 1)
             {
-                //Debug.Log("Reiniciou");
                 PlayerPrefs.SetInt("MaxIndex", 18);
                 PlayerPrefs.SetInt("MinIndex", 13);
                 if (PlayerPrefs.GetInt("levelAt") < 5)
                     PlayerPrefs.SetInt("levelAt", 5);
 
-                LoadAwardScene();////////////////////carregar premio
-
-
+                ShowPopup(); // Carregar prêmio
             }
             else
             {
@@ -165,16 +158,15 @@ public class TrueFalseData : MonoBehaviour
         FalseText.color = originalColor;
     }
 
-
-    private void LoadAwardScene()
+    public void LoadAwardScene()
     {
         int score = ScoreManager.Instance.GetScore();
-        
-        
+
         if (score > 10)
         {
             SceneManager.LoadScene("Award02");
-        }else if(score > 5)
+        }
+        else if (score > 5)
         {
             SceneManager.LoadScene("Award01");
         }
@@ -182,5 +174,82 @@ public class TrueFalseData : MonoBehaviour
         {
             SceneManager.LoadScene("Award00");
         }
+    }
+
+    private void HidePopup()
+    {
+        ScoreTable.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        scoreButton.gameObject.SetActive(false);
+
+        for (int i = 0; i < Stars.Length; i++)
+        {
+            Stars[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < Medals.Length; i++)
+        {
+            Medals[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowPopup()
+    {
+        ScoreTable.gameObject.SetActive(true);
+        scoreText.gameObject.SetActive(true);
+        scoreButton.gameObject.SetActive(true);
+
+        SetStars();
+        SetMedals();
+        SetScore();
+    }
+
+    private void SetStars()
+    {
+        if (totalScore == MAXSCORE)
+        {
+            for (int i = 0; i < Stars.Length; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+            }
+        }
+        else if (totalScore > MAXSCORE / 2)
+        {
+            for (int i = 0; i < Stars.Length; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+                i++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Stars.Length - 2; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void SetMedals()
+    {
+        if (totalScore == MAXSCORE)
+        {
+            Medals[2].gameObject.SetActive(true);
+        }
+        else if (totalScore > MAXSCORE / 2)
+        {
+            Medals[1].gameObject.SetActive(true);
+        }
+        else
+        {
+            Medals[0].gameObject.SetActive(true);
+        }
+    }
+
+    private void SetScore()
+    {
+        totalScore = PlayerPrefs.GetInt("QuizScore", 0); 
+        Debug.Log("MAXSCORE --> " + MAXSCORE);
+        Debug.Log("TOTALSCORE --> " + totalScore);
+        scoreText.text = totalScore.ToString();
     }
 }

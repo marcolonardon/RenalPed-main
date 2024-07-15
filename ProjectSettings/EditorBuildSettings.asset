@@ -113,4 +113,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TesteCriarPlayers.unity
     guid: 7cc85b56619f97443a4e4bdb9e1681a3
+  - enabled: 1
+    path: Assets/Scenes/Teste.unity
+    guid: 8d8930808666a3f4ca31c30ae96418a1
   m_configObjects: {}

@@ -1,3 +1,4 @@
+using UnityEngine;
 using Proyecto26;
 using System;
 using System.Collections;
@@ -40,6 +41,12 @@ public class UIController : MonoBehaviour
     {
         GameObject popUpGo = Instantiate(Resources.Load("UI/FoodCharacterPopup") as GameObject);
         return popUpGo.GetComponent<FoodPopup>();
+    }
+
+    public ScorePopup CreateScorePopup()
+    {
+        GameObject popUpGo = Instantiate(Resources.Load("UI/ScorePopup") as GameObject);
+        return popUpGo.GetComponent<ScorePopup>();
     }
 
 }

@@ -39,4 +39,23 @@ public class SceneNavigation : MonoBehaviour
         }
     }
 
+    public void StartPaintGame()
+    {
+        PlayerPrefs.SetInt("TotalScore", 0);
+        SceneManager.LoadScene("PaintPage1");
+    }
+
+    public void StartWashGame()
+    {
+        PlayerPrefs.SetInt("WashScore", 1000);
+        SceneManager.LoadScene("SpeechBubblePage6");
+    }
+
+    public void StartQuizGame()
+    {
+        PlayerPrefs.SetInt("QuizScore", 0);
+        SceneManager.LoadScene("QuizPage");
+    }
+
+
 }

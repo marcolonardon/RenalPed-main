@@ -10,6 +10,9 @@ using System.Globalization;
 
 public class QuizData : MonoBehaviour
 {
+    private const int MAXSCORE = 1250;
+    private const int ADDSCORE = 250;
+
     public GameObject BallonAnimation;
     public GameObject SadFace;
     public GameObject FadeIn, FadeOut;
@@ -159,7 +162,7 @@ public class QuizData : MonoBehaviour
                 break;
         }
 
-        ScoreManager.Instance.AddQuizScore(4, 1); ///////////////////////////////////////////////////////////////////////
+        ScoreManager.Instance.AddQuizScore(MAXSCORE, ADDSCORE); ///////////////////////////////////////////////////////////////////////
     }
 
     private void printIncorrect(string op)

@@ -1,8 +1,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 public class FoodQuiz : MonoBehaviour
 {
+    private const int MAXCORRECT = 4;
+    private const int ADDPOINTS = 1024;
+    private const int MAXPOINTS = MAXCORRECT * ADDPOINTS;
+
+
+    public static ScoreMenu Instance;
+
+    public GameObject ScoreTable;
+    public GameObject[] Stars;
+    public GameObject[] Medals;
+    public Text scoreText;
+    public Button scoreButton;
+
+
     public Text questionText;
     public Button leftButton;
     public Button rightButton;
@@ -17,9 +32,13 @@ public class FoodQuiz : MonoBehaviour
     private int currentIndex = 0;
     private bool answer = false;
     private int totalAnswers = 0;
+    private int TotalCorrectAnswers = 0;
+    private int PointsEarned=0;
 
     private void Start()
     {
+        HidPopup();
+
         if (PlayerPrefs.GetInt("levelAt") < 2)
             PlayerPrefs.SetInt("levelAt", 2);
         PlayerPrefs.SetInt("MaxIndex", 9);
@@ -33,6 +52,8 @@ public class FoodQuiz : MonoBehaviour
         checkButton.gameObject.SetActive(false);
         RemoveSelection();
     }
+
+
 
     private void SetButtonSprite(Button button, Sprite sprite)
     {
@@ -75,8 +96,12 @@ public class FoodQuiz : MonoBehaviour
         if (answer)
         {
             // Debug.Log("Acertou");
-            ScoreManager.Instance.AddFoodScore(4, 1); ////////////////////////////////////////////////////////////
+            ScoreManager.Instance.AddFoodScore(MAXCORRECT, ADDPOINTS); ////////////////////////////////////////////////////////////
             totalAnswers++;
+            TotalCorrectAnswers++;
+            PointsEarned += ADDPOINTS;
+
+            ScoreManager.Instance.AddFoodScore(MAXPOINTS, PointsEarned);
         }
         else
         {
@@ -105,9 +130,14 @@ public class FoodQuiz : MonoBehaviour
             currentIndex++;
             //Debug.Log("index: " + currentIndex);
         }
-        else
+        else //chegou na última questão
         {
             Debug.Log("index: " + currentIndex);
+
+
+            //ScoreMenu.Instance.SetStars(4, TotalCorrectAnswers); //////////// 
+
+            ShowPopup();  ///////////// POPUP
             //currentIndex = 0;
             //SceneManager.LoadScene("Bonus1");
         }
@@ -129,5 +159,81 @@ public class FoodQuiz : MonoBehaviour
         SetButtonSprite(leftButton, leftFoodSprite[i]); // Alimento saudável
         SetButtonSprite(rightButton, rightFoodSprite[i]); // Alimento não saudável
         //Debug.Log("Setou nova sprite");
+    }
+
+    private void HidPopup()
+    {
+        ScoreTable.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        scoreButton.gameObject.SetActive(false);
+
+        for (int i = 0; i < Stars.Length; i++)
+        {
+            Stars[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < Medals.Length; i++)
+        {
+            Medals[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowPopup()
+    {
+        ScoreTable.gameObject.SetActive(true);
+        scoreText.gameObject.SetActive(true);
+        scoreButton.gameObject.SetActive(true);
+
+
+        SetStars();
+        SetMedals();
+        SetScore();
+
+    }
+
+    private void SetStars()
+    {
+        if (TotalCorrectAnswers == MAXCORRECT)
+        {
+            for (int i = 0; i < Stars.Length; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+            }
+        }
+        else if (TotalCorrectAnswers >= MAXCORRECT / 2)
+        {
+            for (int i = 0; i < Stars.Length; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+                i++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Stars.Length-2; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void SetMedals()
+    {
+        if (TotalCorrectAnswers == MAXCORRECT)
+        {
+            Medals[2].gameObject.SetActive(true);
+        }
+        else if (TotalCorrectAnswers >= MAXCORRECT / 2)
+        {
+            Medals[1].gameObject.SetActive(true);
+        }
+        else
+        {
+            Medals[0].gameObject.SetActive(true);
+        }
+    }
+
+    private void SetScore()
+    {
+        scoreText.text = PointsEarned.ToString();
     }
 }

@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class SelectObjects : MonoBehaviour
 {
+    private const int MAXSCORE = 1000;
+    private int AddScore;
+
     [SerializeField] Button checkButton;
     [SerializeField] Image[] selected;
     private int selectedObjects = 0;
@@ -14,6 +17,7 @@ public class SelectObjects : MonoBehaviour
 
     void Start()
     {
+        AddScore = PlayerPrefs.GetInt("WashScore", 0); // Inicializa AddScore no Start
         SetAllFalse();
         selectedSequence = new string[3];
     }
@@ -32,7 +36,6 @@ public class SelectObjects : MonoBehaviour
 
     private void SetAllFalse()
     {
-
         for (int i = 0; i < selected.Length; i++)
         {
             selected[i].gameObject.SetActive(false); // Desativa todas as imagens no início
@@ -72,7 +75,6 @@ public class SelectObjects : MonoBehaviour
         }
 
         selectedObjects++;
-
     }
 
     public void checkObjects()
@@ -83,13 +85,20 @@ public class SelectObjects : MonoBehaviour
         // Verifica se a sequência Slot4, Slot6, Slot8 está presente na string
         if (sequenceString.Contains("Slot4") && sequenceString.Contains("Slot6") && sequenceString.Contains("Slot8"))
         {
+            PlayerPrefs.SetInt("WashScore", AddScore);
             SceneManager.LoadScene("SpeechBubblePage5");
             Debug.Log("Todos os objetos foram selecionados");
         }
         else
         {
+            AddScore -= 100;
+            if (AddScore < 0)
+            {
+                AddScore = 0; // Garante que a pontuação não fique negativa
+            }
+            PlayerPrefs.SetInt("WashScore", AddScore);
             SceneManager.LoadScene("SpeechBubblePage4");
-            Debug.Log("Errou");
+            Debug.Log("Errou. Score --> " + AddScore);
         }
     }
 }

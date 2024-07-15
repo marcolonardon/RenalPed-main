@@ -26,6 +26,8 @@ TagManager:
   - WashHand
   - Slot7
   - Slot8
+  - Stars
+  - Medals
   layers:
   - Default
   - TransparentFX

@@ -6,16 +6,34 @@ using UnityEngine.SceneManagement;
 
 public class ColorManager : MonoBehaviour
 {
+    private const int ADDPOINTS = 25;
+    private const int MAXSCORE = 2375;
+
     private string selectedColorHex;
     public List<Button> colorButtons;
     public List<Image> images;
     private RectTransform selectedButtonRectTransform;
     private Vector2 originalPosition;
     private string currentSceneName;
+    private HashSet<Image> paintedImages; // HashSet to track painted images
+
+    private int totalScore;
+
+
+    public Image ScoreTable;
+    public GameObject[] Stars;
+    public GameObject[] Medals;
+    public Text scoreText;
+    public Button scoreButton;
 
     void Start()
     {
+        if (ScoreTable != null){
+            HidePopup();
+        }
+        
         currentSceneName = SceneManager.GetActiveScene().name;
+        paintedImages = new HashSet<Image>(); // Initialize the HashSet
 
         foreach (Button button in colorButtons)
         {
@@ -28,6 +46,7 @@ public class ColorManager : MonoBehaviour
         }
 
         LoadPainting();
+        LoadScore();
     }
 
     private void OnColorButtonClick(Button clickedButton)
@@ -76,12 +95,26 @@ public class ColorManager : MonoBehaviour
             {
                 clickedImage.color = color; // Apply the selected color to the clicked image
                 SavePainting();
+
+                // Only increment score if the image is painted for the first time
+                if (!paintedImages.Contains(clickedImage))
+                {
+                    paintedImages.Add(clickedImage);
+                    IncrementScore();
+                }
             }
             else
             {
                 Debug.LogError("Invalid color hex: " + selectedColorHex);
             }
         }
+    }
+
+    private void IncrementScore()
+    {
+        totalScore += ADDPOINTS;
+        PlayerPrefs.SetInt("TotalScore", totalScore);
+        Debug.Log("Total Score: " + totalScore);
     }
 
     private void SavePainting()
@@ -107,8 +140,23 @@ public class ColorManager : MonoBehaviour
         }
     }
 
+    private void LoadScore()
+    {
+        totalScore = PlayerPrefs.GetInt("TotalScore", 0);
+        Debug.Log("Loaded Total Score: " + totalScore);
+    }
+
+    public void ResetScore()
+    {
+        totalScore = 0;
+        PlayerPrefs.SetInt("TotalScore", totalScore);
+        Debug.Log("Score reset to 0");
+    }
+
     public void UnlockNextLevel()
     {
+        ShowPopup();
+
         if (PlayerPrefs.GetInt("levelAt") < 1)
             PlayerPrefs.SetInt("levelAt", 1);
 
@@ -116,5 +164,84 @@ public class ColorManager : MonoBehaviour
         PlayerPrefs.SetInt("MinIndex", 0);
 
         PlayerPrefs.Save();
+    }
+
+    private void HidePopup()
+    {
+        ScoreTable.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        scoreButton.gameObject.SetActive(false);
+
+        for (int i = 0; i < Stars.Length; i++)
+        {
+            Stars[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < Medals.Length; i++)
+        {
+            Medals[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowPopup()
+    {
+        ScoreTable.gameObject.SetActive(true);
+        scoreText.gameObject.SetActive(true);
+        scoreButton.gameObject.SetActive(true);
+
+
+        SetStars();
+        SetMedals();
+        SetScore();
+
+    }
+
+    private void SetStars()
+    {
+        if (totalScore > MAXSCORE / 1.2)
+        {
+            for (int i = 0; i < Stars.Length; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+            }
+        }
+        else if (totalScore > MAXSCORE / 2.2)
+        {
+            for (int i = 0; i < Stars.Length; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+                i++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Stars.Length - 2; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void SetMedals()
+    {
+        if (totalScore > MAXSCORE / 1.2)
+        {
+            Medals[2].gameObject.SetActive(true);
+        }
+        else if (totalScore > MAXSCORE / 2.2)
+        {
+            Medals[1].gameObject.SetActive(true);
+        }
+        else
+        {
+            Medals[0].gameObject.SetActive(true);
+        }
+    }
+
+    private void SetScore()
+    {
+        Debug.Log("MAXSCORE --> " + MAXSCORE);
+        Debug.Log("TOTALCORE --> " + totalScore);
+        scoreText.text = totalScore.ToString();
+        ScoreManager.Instance.AddPaintScore(MAXSCORE, totalScore);
     }
 }

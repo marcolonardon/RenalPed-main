@@ -20,7 +20,7 @@ public class CreateFoodPopup : MonoBehaviour
             Debug.Log("Entrou no action");
             if (PlayerPrefs.GetInt("TotalAnswers") == 4)
             {
-                SceneManager.LoadScene("Bonus1");
+                //SceneManager.LoadScene("Bonus1");
                 Debug.Log("Mudou de cena pelo action");
             }
             

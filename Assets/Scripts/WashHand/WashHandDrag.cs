@@ -6,23 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    private const int MAXSCORE = 1000;
+
     public Image soap;
     public Image clickHand;
     public Image clickCircle;
     public Image[] bacterium;
     public RectTransform needleParent;
-    public Button rotateButton;// Arraste o botão aqui no Inspector
-    private float currentAngle = 0f; // Ângulo atual da agulha
-    private const float maxAngle = 180f; // Ângulo máximo da agulha
-    private float targetAngle = 0f; // Ângulo alvo para interpolação
-    public float smoothSpeed = 0.95f; // Velocidade da interpolação
+    public Button rotateButton;
+    private float currentAngle = 0f;
+    private const float maxAngle = 180f;
+    private float targetAngle = 0f;
+    public float smoothSpeed = 0.95f;
     [HideInInspector] public Transform parentAfterDrag;
     [HideInInspector] public Transform initialParent;
 
     private const int damage = 25;
-    private float damageCooldown = 0.5f; // Tempo de cooldown em segundos
+    private float damageCooldown = 0.5f;
     private Dictionary<Bacteria, float> bacteriaCooldowns = new Dictionary<Bacteria, float>();
     private int bacteriaCount;
+
+    private int AddScore;
 
     private void Start()
     {
@@ -33,13 +37,12 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         PlayerPrefs.SetInt("MinIndex", 9);
         rotateButton.onClick.AddListener(RotateNeedle);
         bacteriaCount = bacterium.Length;
+        AddScore = PlayerPrefs.GetInt("WashScore", 0); // Inicializa AddScore no Start
     }
+
     void Update()
     {
-        // Interpola suavemente o ângulo atual para o ângulo alvo
         currentAngle = Mathf.Lerp(currentAngle, targetAngle, smoothSpeed * Time.deltaTime);
-
-        // Aplica a rotação ao GameObject pai da agulha
         needleParent.localRotation = Quaternion.Euler(0, 0, -currentAngle);
     }
 
@@ -57,8 +60,6 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         bacterium = RemoveBacteriaFromArray(bacterium, bacteria.GetComponent<Image>());
         bacteriaCount--;
-
-        // Não mudar de cena aqui; aguardar o OnEndDrag para verificar o estado do sabonete.
     }
 
     private Image[] RemoveBacteriaFromArray(Image[] array, Image element)
@@ -75,8 +76,8 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         parentAfterDrag = transform.parent;
         initialParent = transform.parent;
         transform.SetParent(transform.root);
-        transform.SetAsLastSibling(); //sempre na frente das outras imagens quando arrasta
-        soap.raycastTarget = false; //para dropar na camada de baixo, ignora o que está arrastando
+        transform.SetAsLastSibling();
+        soap.raycastTarget = false;
         IsDragging = true;
     }
 
@@ -93,17 +94,24 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         soap.raycastTarget = true;
         IsDragging = false;
 
-        if (bacteriaCount == 0) //Verifica se todas as bacterias foram mortas ou nao
+        if (bacteriaCount == 0)
         {
-            SceneManager.LoadScene("HandSpeechBubblePage2");
-
-            if (PlayerPrefs.GetInt("levelAt") < 3) // Desbloqueia a proxima missao
+            
+            if (PlayerPrefs.GetInt("levelAt") < 3)
                 PlayerPrefs.SetInt("levelAt", 3);
-            ScoreManager.Instance.AddWashHandsScore(1, 1); ///////////////////////////////////////////////////////////////////////
+            PlayerPrefs.SetInt("WashScore", AddScore);
+            SceneManager.LoadScene("HandSpeechBubblePage2");
         }
         else
         {
             SceneManager.LoadScene("HandSpeechBubblePage1");
+            AddScore -= 100;
+            if (AddScore < 0)
+            {
+                AddScore = 0; // Garante que a pontuação não fique negativa
+            }
+            PlayerPrefs.SetInt("WashScore", AddScore);
+            Debug.Log("Errou. Score --> " + AddScore);
         }
     }
 
@@ -120,14 +128,6 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                     {
                         bacteria.TakeDamage(damage);
                         RotateNeedle();
-
-
-
-
-
-
-
-
                         bacteriaCooldowns[bacteria] = Time.time + damageCooldown;
                     }
                 }
@@ -144,17 +144,12 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         return Time.time >= bacteriaCooldowns[bacteria];
     }
 
-
-
     void RotateNeedle()
     {
-        // Incrementa o ângulo alvo da agulha
         targetAngle += 10.3f;
-
-        // Limita o ângulo alvo ao máximo de 180 graus
         if (targetAngle > maxAngle)
         {
-            targetAngle = 0f; // Reseta o ângulo alvo para 0 se ultrapassar 180 graus
+            targetAngle = 0f;
         }
     }
 
