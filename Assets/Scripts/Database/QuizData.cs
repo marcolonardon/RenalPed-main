@@ -10,8 +10,9 @@ using System.Globalization;
 
 public class QuizData : MonoBehaviour
 {
-    private const int MAXSCORE = 1250;
-    private const int ADDSCORE = 250;
+    private const int MAXSCORE = 1000;
+    private int ADDSCORE;
+    private int totalScore = 0;
 
     public GameObject BallonAnimation;
     public GameObject SadFace;
@@ -27,6 +28,7 @@ public class QuizData : MonoBehaviour
     public static string playerQuestion;
     public static string playerCorrectAnswer;
     public static int numOfQuizQuestions;
+    public static int numOfTFQuestions;
     public static string playerAAnswer;
     public static string playerBAnswer;
     public static string playerCAnswer;
@@ -37,6 +39,7 @@ public class QuizData : MonoBehaviour
 
     void Start()
     {
+        LoadScore();
         UIAnimationsDisable();
         originalColorA = AAnswerText.color;
         originalColorB = BAnswerText.color;
@@ -44,6 +47,8 @@ public class QuizData : MonoBehaviour
 
         getTotalQuestions();
         OnGetQuestion();
+
+        ADDSCORE = MAXSCORE / ((numOfQuizQuestions) + (numOfTFQuestions)); // para que a soma máxima dos acertos sempre fique em 1000 - ignora casas decimais 
 
     }
 
@@ -120,6 +125,7 @@ public class QuizData : MonoBehaviour
     private void getTotalQuestions()
     {
         numOfQuizQuestions = PlayerPrefs.GetInt("TotalQuizQuestions");
+        numOfTFQuestions = PlayerPrefs.GetInt("TotalTrueFalseQuestions");
     }
 
     public void CheckAButton(string op)
@@ -162,7 +168,8 @@ public class QuizData : MonoBehaviour
                 break;
         }
 
-        ScoreManager.Instance.AddQuizScore(MAXSCORE, ADDSCORE); ///////////////////////////////////////////////////////////////////////
+
+        IncrementScore(); ///////////////////////////////////////////////////////////////////////
     }
 
     private void printIncorrect(string op)
@@ -209,10 +216,28 @@ public class QuizData : MonoBehaviour
     }
 
 
+    private void IncrementScore()
+    {
+        if (PlayerPrefs.GetInt("TotalQuizScore", 0) < MAXSCORE)
+        {
+            totalScore += ADDSCORE;
+            PlayerPrefs.SetInt("TotalQuizScore", totalScore);
+            PlayerPrefs.Save();
+            Debug.Log("Total Score---> " + totalScore);
+
+            ScoreManager.Instance.AddQuizScore(MAXSCORE, totalScore);
+        }
+
+        Debug.LogWarning("Está com --> " + PlayerPrefs.GetInt("TotalQuizScore", 0));
+    }
 
 
-
-
+    private void LoadScore()
+    {
+        Debug.LogWarning("Entrou no LoadScore");
+        totalScore = PlayerPrefs.GetInt("TotalQuizScore", 0);
+        Debug.Log("Loaded Total Score---> " + totalScore);
+    }
 
 
 

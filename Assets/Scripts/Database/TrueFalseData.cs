@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class TrueFalseData : MonoBehaviour
 {
-    private const int MAXSCORE = 1250;
-    private const int ADDSCORE = 250;
+    private const int MAXSCORE = 1000;
+    private int ADDSCORE;
 
     public Image ScoreTable;
     public GameObject[] Stars;
@@ -33,6 +33,7 @@ public class TrueFalseData : MonoBehaviour
     public static string playerQuestion;
     public static string playerAnswer;
     public static int numOfTFQuestions;
+    public static int numOfQuizQuestions;
 
     private int questionIndex = 0;
     private string questionAnswer;
@@ -41,14 +42,15 @@ public class TrueFalseData : MonoBehaviour
 
     void Start()
     {
-        totalScore = PlayerPrefs.GetInt("QuizScore", 0);
-        Debug.Log("Loaded Quiz Total Score>>>>>>>>>>: " + totalScore);
+        LoadScore();
+      
 
         HidePopup();
         originalColor = TrueText.color;
         UIAnimationsDisable();
         getTotalQuestions();
         OnGetQuestion();
+        ADDSCORE = MAXSCORE / ((numOfQuizQuestions) + (numOfTFQuestions)); // para que a soma máxima dos acertos sempre fique em 1000 - ignora casas decimais 
     }
 
     private void Update()
@@ -78,7 +80,7 @@ public class TrueFalseData : MonoBehaviour
         {
             BallonAnimation.SetActive(true);
             TrueText.color = Color.green;
-            ScoreManager.Instance.AddQuizScore(MAXSCORE, ADDSCORE); // Atualiza o score
+            IncrementScore(); // Atualiza o score
             Debug.Log("Acertou! A resposta é verdadeira");
         }
         else
@@ -99,7 +101,7 @@ public class TrueFalseData : MonoBehaviour
         {
             BallonAnimation.SetActive(true);
             FalseText.color = Color.green;
-            ScoreManager.Instance.AddQuizScore(MAXSCORE, ADDSCORE); // Atualiza o score
+            IncrementScore(); // Atualiza o score
             Debug.Log("Acertou! A resposta é falsa");
         }
         else
@@ -142,6 +144,7 @@ public class TrueFalseData : MonoBehaviour
     private void getTotalQuestions()
     {
         numOfTFQuestions = PlayerPrefs.GetInt("TotalTrueFalseQuestions");
+        numOfQuizQuestions = PlayerPrefs.GetInt("TotalQuizQuestions");
     }
 
     private IEnumerator WaitAndGoToNextQuestion()
@@ -247,9 +250,34 @@ public class TrueFalseData : MonoBehaviour
 
     private void SetScore()
     {
-        totalScore = PlayerPrefs.GetInt("QuizScore", 0); 
+        totalScore = PlayerPrefs.GetInt("TrueFalseScore", 0); 
         Debug.Log("MAXSCORE --> " + MAXSCORE);
         Debug.Log("TOTALSCORE --> " + totalScore);
         scoreText.text = totalScore.ToString();
+    }
+
+    
+    private void IncrementScore()
+    {
+        if (PlayerPrefs.GetInt("TotalTrueFalseScore", 0) < MAXSCORE)
+        {
+            totalScore += ADDSCORE;
+            PlayerPrefs.SetInt("TotalTrueFalseScore", totalScore);
+            PlayerPrefs.Save();
+            Debug.Log("Total Score---> " + totalScore);
+
+            ScoreManager.Instance.AddQuizScore(MAXSCORE, totalScore);
+        }
+
+        Debug.LogWarning("Está com --> " + PlayerPrefs.GetInt("TotalTrueFalseScore", 0));
+    }
+
+
+    private void LoadScore()
+    {
+        Debug.LogWarning("Entrou no LoadScore");
+        totalScore = ((PlayerPrefs.GetInt("TotalTrueFalseScore", 0)) + (PlayerPrefs.GetInt("TotalQuizScore")));
+        Debug.Log("Loaded Quiz Total Score>>>>>>>>>>: " + totalScore); ;
+        Debug.Log("Loaded Total Score---> " + totalScore);
     }
 }

@@ -37,7 +37,7 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         PlayerPrefs.SetInt("MinIndex", 9);
         rotateButton.onClick.AddListener(RotateNeedle);
         bacteriaCount = bacterium.Length;
-        AddScore = PlayerPrefs.GetInt("WashScore", 0); // Inicializa AddScore no Start
+        AddScore = PlayerPrefs.GetInt("WashScore", 0); 
     }
 
     void Update()

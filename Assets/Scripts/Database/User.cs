@@ -14,6 +14,11 @@ public class User
     public int total_quiz_questions;
     public int total_circle_slot_questions;
     public float data_base_version;
+    public int total_names;
+    public int total_surnames;
+    public string name;
+    public string surname;
+    public int nameIndex;
 
 
 
@@ -27,6 +32,11 @@ public class User
         a_answer = QuizData.playerAAnswer;
         b_answer = QuizData.playerBAnswer;
         c_answer = QuizData.playerCAnswer;
+        total_names = NameGenerator.MaxNameIndex;
+        total_surnames = NameGenerator.MaxSurnameIndex;
+        name = NameGenerator.playerName;
+        surname = NameGenerator.playerSurname; 
+        nameIndex = NameGenerator.nameIndex;
     }
 
 }

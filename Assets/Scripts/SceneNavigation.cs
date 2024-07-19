@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class SceneNavigation : MonoBehaviour
 {
     public static SceneNavigation Instance { get; private set; }
-
     private void Awake()
     {
 
@@ -42,20 +41,25 @@ public class SceneNavigation : MonoBehaviour
     public void StartPaintGame()
     {
         PlayerPrefs.SetInt("TotalScore", 0);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("PaintPage1");
     }
 
     public void StartWashGame()
     {
         PlayerPrefs.SetInt("WashScore", 1000);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("SpeechBubblePage6");
     }
 
     public void StartQuizGame()
     {
         PlayerPrefs.SetInt("QuizScore", 0);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("QuizPage");
     }
+
+
 
 
 }

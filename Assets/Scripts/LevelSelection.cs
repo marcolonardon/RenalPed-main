@@ -156,12 +156,16 @@ public class LevelSelection : MonoBehaviour
     {
         Debug.Log("Entrou no reset");
 
+        PlayerPrefs.SetInt("PaintScore", 0);
         PlayerPrefs.SetInt("QuizScore", 0);
         PlayerPrefs.SetInt("TrueFalseScore", 0);
-        PlayerPrefs.SetInt("WashHandsScore", 0);
+        PlayerPrefs.SetInt("WashScore", 0);
         PlayerPrefs.SetInt("FoodScore", 0);
         PlayerPrefs.SetInt("BedRoomScore", 0);
         PlayerPrefs.SetInt("DragCircleScore", 0);
+
+        PlayerPrefs.SetInt("TotalPaintScore", 0);
+        PlayerPrefs.SetInt("TotalQuizScore", 0);
 
         PlayerPrefs.SetInt("Customized", 0);
 

@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; 
 
-public class ColorManager : MonoBehaviour
+public class ColorManager : MonoBehaviour 
 {
-    private const int ADDPOINTS = 25;
-    private const int MAXSCORE = 2375;
+    private const int ADDPOINTS = 11;
+    private const int MAXSCORE = 1001;
 
     private string selectedColorHex;
     public List<Button> colorButtons;
@@ -17,7 +17,7 @@ public class ColorManager : MonoBehaviour
     private string currentSceneName;
     private HashSet<Image> paintedImages; // HashSet to track painted images
 
-    private int totalScore;
+    private int totalScore = 0;
 
 
     public Image ScoreTable;
@@ -28,6 +28,8 @@ public class ColorManager : MonoBehaviour
 
     void Start()
     {
+        LoadScore();
+
         if (ScoreTable != null){
             HidePopup();
         }
@@ -45,9 +47,12 @@ public class ColorManager : MonoBehaviour
             AddClickListenerToImage(image);
         }
 
+        
         LoadPainting();
-        LoadScore();
+        
     }
+
+
 
     private void OnColorButtonClick(Button clickedButton)
     {
@@ -112,10 +117,17 @@ public class ColorManager : MonoBehaviour
 
     private void IncrementScore()
     {
-        totalScore += ADDPOINTS;
-        PlayerPrefs.SetInt("TotalScore", totalScore);
-        Debug.Log("Total Score: " + totalScore);
+        if (PlayerPrefs.GetInt("TotalPaintScore", 0) < MAXSCORE)
+        {
+            totalScore += ADDPOINTS;
+            PlayerPrefs.SetInt("TotalPaintScore", totalScore);
+            PlayerPrefs.Save();
+            Debug.Log("Total Score---> " + totalScore);
+        }
+
+        Debug.LogWarning("Está com --> " + PlayerPrefs.GetInt("TotalPaintScore", 0));
     }
+
 
     private void SavePainting()
     {
@@ -142,15 +154,9 @@ public class ColorManager : MonoBehaviour
 
     private void LoadScore()
     {
-        totalScore = PlayerPrefs.GetInt("TotalScore", 0);
-        Debug.Log("Loaded Total Score: " + totalScore);
-    }
-
-    public void ResetScore()
-    {
-        totalScore = 0;
-        PlayerPrefs.SetInt("TotalScore", totalScore);
-        Debug.Log("Score reset to 0");
+        Debug.LogWarning("Entrou no LoadScore");
+        totalScore = PlayerPrefs.GetInt("TotalPaintScore", 0);
+        Debug.Log("Loaded Total Score---> " + totalScore);
     }
 
     public void UnlockNextLevel()

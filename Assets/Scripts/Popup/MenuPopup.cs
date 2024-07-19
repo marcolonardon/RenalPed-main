@@ -46,7 +46,7 @@ public class MenuPopup : MonoBehaviour
         });
 
         _rankingButton.onClick.AddListener(() => {
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("Ranking");
             GameObject.Destroy(this.gameObject);
         });
 

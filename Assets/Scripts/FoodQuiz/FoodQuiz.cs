@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class FoodQuiz : MonoBehaviour
 {
     private const int MAXCORRECT = 4;
-    private const int ADDPOINTS = 1024;
+    private const int ADDPOINTS = 250;
     private const int MAXPOINTS = MAXCORRECT * ADDPOINTS;
 
 

@@ -6512,7 +6512,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.92156863, b: 1, a: 1}
+      maxColor: {r: 0.08627451, g: 0.85882354, b: 0.39607844, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -11459,16 +11459,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1077765495}
-        m_TargetAssemblyTypeName: SceneNavigation, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 1337715698}
+        m_TargetAssemblyTypeName: ScoreManager, Assembly-CSharp
+        m_MethodName: ResetPaintScore
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: TesteCriarPlayers
+          m_StringArgument: Ranking
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &660369089
@@ -17019,7 +17019,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.92156863, b: 1, a: 1}
+      maxColor: {r: 0.08627451, g: 0.85882354, b: 0.39607844, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -18044,7 +18044,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7853982
+      scalar: 0.7853981
       minScalar: 0.7853982
       maxCurve:
         serializedVersion: 2
@@ -21954,7 +21954,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.92156863, b: 1, a: 1}
+      maxColor: {r: 0.08627451, g: 0.85882354, b: 0.39607844, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -27009,6 +27009,37 @@ RectTransform:
   m_AnchoredPosition: {x: 1, y: 0}
   m_SizeDelta: {x: 21.2706, y: 9.139603}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &980056765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980056767}
+  m_Layer: 0
+  m_Name: Leaderboard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &980056767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980056765}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1919.148, y: 462.49973, z: 3.4303246}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1077765494
 GameObject:
   m_ObjectHideFlags: 0
@@ -27938,6 +27969,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e13124f654c3604b8dbec2932432c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  publicLeaderboardKey: a596ccf54ff34bb440e9425704a73df4181f0c67645112c444554f4962e042fa
+  submitScoreEvent:
+    m_PersistentCalls:
+      m_Calls: []
   TotalScoreText: {fileID: 1634917591}
   PlayerNameText: {fileID: 1789704079}
 --- !u!4 &1337715699
@@ -33973,7 +34008,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Criar Players
+  m_Text: Rst Paint Score
 --- !u!222 &1798481743
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34753,7 +34788,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.92156863, b: 1, a: 1}
+      maxColor: {r: 0.08627451, g: 0.85882354, b: 0.39607844, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -49744,7 +49779,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.92156863, b: 1, a: 1}
+      maxColor: {r: 0.08627451, g: 0.85882354, b: 0.39607844, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -54586,3 +54621,4 @@ SceneRoots:
   - {fileID: 190103270}
   - {fileID: 2028914765}
   - {fileID: 1337715699}
+  - {fileID: 980056767}

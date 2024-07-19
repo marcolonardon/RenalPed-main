@@ -1,10 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Dan.Main;
+using UnityEngine.SocialPlatforms.Impl;
+using System.Runtime.CompilerServices;
+using UnityEngine.Events;
 
 public class ScoreManager : MonoBehaviour
 {
-
+    public string publicLeaderboardKey = "a596ccf54ff34bb440e9425704a73df4181f0c67645112c444554f4962e042fa";
+    public UnityEvent<string, int> submitScoreEvent;
     // Singleton instance
     public static ScoreManager Instance { get; private set; }
 
@@ -35,18 +40,36 @@ public class ScoreManager : MonoBehaviour
         GetScore();
     }
 
+    public void ResetScore()
+    {
+        PlayerPrefs.SetInt("PaintScore", 0);
+        PlayerPrefs.SetInt("QuizScore", 0);
+        PlayerPrefs.SetInt("TrueFalseScore", 0);
+        PlayerPrefs.SetInt("WashScore", 0);
+        PlayerPrefs.SetInt("FoodScore", 0);
+        PlayerPrefs.SetInt("BedRoomScore", 0);
+        PlayerPrefs.SetInt("DragCircleScore", 0);
+
+        PlayerPrefs.SetInt("TotalPaintScore", 0);
+        PlayerPrefs.SetInt("TotalQuizScore", 0);
+        PlayerPrefs.SetInt("TotalTrueFalseScore", 0);
+
+        PlayerPrefs.Save();
+
+        Debug.Log("Resetou os scores");
+    }
+
 
     public void UpdateScore()
     {
         PaintScore = PlayerPrefs.GetInt("PaintScore", 0);
         QuizScore = PlayerPrefs.GetInt("QuizScore", 0);
-        TrueFalseScore = PlayerPrefs.GetInt("QuizScore", 0);
+        TrueFalseScore = PlayerPrefs.GetInt("TrueFalseScore", 0);
         WashHandsScore = PlayerPrefs.GetInt("WashScore", 0);
         FoodScore = PlayerPrefs.GetInt("FoodScore", 0);
         BedRoomScore = PlayerPrefs.GetInt("BedRoomScore", 0);
         DragCircleScore = PlayerPrefs.GetInt("DragCircleScore", 0);
     }
-
 
     public int GetScore()
     {
@@ -58,29 +81,35 @@ public class ScoreManager : MonoBehaviour
                     FoodScore +
                     BedRoomScore +
                     DragCircleScore;
-        Debug.LogWarning("Somando: " + PaintScore+ " + " + QuizScore + " + " + TrueFalseScore + " + " + WashHandsScore + " + " + FoodScore + " + " + BedRoomScore + " + " + DragCircleScore);
-        if (SceneManager.GetActiveScene().name == "Menu")
+        Debug.LogWarning("Somando: " + PaintScore + " + " + QuizScore + " + " + TrueFalseScore + " + " + WashHandsScore + " + " + FoodScore + " + " + BedRoomScore + " + " + DragCircleScore);
+        if (SceneManager.GetActiveScene().name == "Menu" || SceneManager.GetActiveScene().name == "Ranking")
         {
-            TotalScoreText.text = "Total Score: " + total;
+            TotalScoreText.text = total.ToString();
             PlayerNameText.text = PlayerPrefs.GetString("CharacterName", "Nome do Avatar");
         }
 
+        PlayerPrefs.SetInt("TotalScore", total);
         return total;
     }
 
+    private void UpdateScoreIfHigher(string key, int score)
+    {
+        int currentScore = PlayerPrefs.GetInt(key, 0);
+        if (score > currentScore)
+        {
+            PlayerPrefs.SetInt(key, score);
+            PlayerPrefs.Save();
+        }
+    }
 
     public void AddQuizScore(int max, int add)
     {
         int score = PlayerPrefs.GetInt("QuizScore", 0);
-        if (score + add <= max)
+        if (score < max)
         {
-            Debug.Log("Adicionou no quiz score + " + add);
-            score += add;
-            PlayerPrefs.SetInt("QuizScore", score);
-            PlayerPrefs.Save();
+            score = add;
+            UpdateScoreIfHigher("QuizScore", score);
         }
-
-
         QuizScore = PlayerPrefs.GetInt("QuizScore", 0);
         Debug.Log("Quiz Score no manager: " + QuizScore);
     }
@@ -88,15 +117,11 @@ public class ScoreManager : MonoBehaviour
     public void AddTrueFalseScore(int max, int add)
     {
         int score = PlayerPrefs.GetInt("TrueFalseScore", 0);
-        if (score + add <= max)
+        if (score < add)
         {
-            Debug.Log("Adicionou no true false score + " + add);
-            score += add;
-            PlayerPrefs.SetInt("TrueFalseScore", score);
-            PlayerPrefs.Save();
+            score = add;
+            UpdateScoreIfHigher("TrueFalseScore", score);
         }
-
-
         TrueFalseScore = PlayerPrefs.GetInt("TrueFalseScore", 0);
         Debug.Log("TrueFalse Score: " + TrueFalseScore);
     }
@@ -104,15 +129,11 @@ public class ScoreManager : MonoBehaviour
     public void AddWashHandsScore(int max, int add)
     {
         int score = PlayerPrefs.GetInt("WashScore", 0);
-        if (score + add <= max)
+        if (score < add)
         {
-            Debug.Log("Adicionou no wash score + " + add);
-            score += add;
-            PlayerPrefs.SetInt("WashScore", score);
-            PlayerPrefs.Save();
+            score = add;
+            UpdateScoreIfHigher("WashScore", score);
         }
-
-
         WashHandsScore = PlayerPrefs.GetInt("WashScore", 0);
         Debug.Log("WashHands Score: " + WashHandsScore);
     }
@@ -120,15 +141,11 @@ public class ScoreManager : MonoBehaviour
     public void AddFoodScore(int max, int add)
     {
         int score = PlayerPrefs.GetInt("FoodScore", 0);
-        if (score + add <= max)
+        if (score < add)
         {
-            Debug.Log("Adicionou no food score + " + add);
-            score += add;
-            PlayerPrefs.SetInt("FoodScore", score);
-            PlayerPrefs.Save();
+            score = add;
+            UpdateScoreIfHigher("FoodScore", score);
         }
-
-
         FoodScore = PlayerPrefs.GetInt("FoodScore", 0);
         Debug.Log("Food Score: " + FoodScore);
     }
@@ -136,15 +153,11 @@ public class ScoreManager : MonoBehaviour
     public void AddBedRoomScore(int max, int add)
     {
         int score = PlayerPrefs.GetInt("BedRoomScore", 0);
-        if (score + add <= max)
+        if (score < add)
         {
-            Debug.Log("Adicionou no BedRoom score + " + add);
-            score += add;
-            PlayerPrefs.SetInt("BedRoomScore", score);
-            PlayerPrefs.Save();
+            score = add;
+            UpdateScoreIfHigher("BedRoomScore", score);
         }
-
-
         BedRoomScore = PlayerPrefs.GetInt("BedRoomScore", 0);
         Debug.Log("BedRoom Score: " + BedRoomScore);
     }
@@ -152,15 +165,11 @@ public class ScoreManager : MonoBehaviour
     public void AddDragCircleScore(int max, int add)
     {
         int score = PlayerPrefs.GetInt("DragCircleScore", 0);
-        if (score + add <= max)
+        if (score < add)
         {
-            Debug.Log("Adicionou no DragCircle score + " + add);
-            score += add;
-            PlayerPrefs.SetInt("DragCircleScore", score);
-            PlayerPrefs.Save();
+            score = add;
+            UpdateScoreIfHigher("DragCircleScore", score);
         }
-
-
         DragCircleScore = PlayerPrefs.GetInt("DragCircleScore", 0);
         Debug.Log("DragCircle Score: " + DragCircleScore);
     }
@@ -168,16 +177,12 @@ public class ScoreManager : MonoBehaviour
     public void AddPaintScore(int max, int add)
     {
         int score = PlayerPrefs.GetInt("PaintScore", 0);
-        if (score <= max)
+        if (score < add)
         {
-            Debug.Log("Adicionou no Paint score + " + add);
-            score += add;
-            PlayerPrefs.SetInt("PaintScore", score);
-            PlayerPrefs.Save();
+            score = add;
+            UpdateScoreIfHigher("PaintScore", score);
         }
-
-
         PaintScore = PlayerPrefs.GetInt("PaintScore", 0);
-        Debug.Log("Paint Score: " + PaintScore);
+        Debug.Log("Paint Score no AddPaintScore: " + PaintScore);
     }
 }
