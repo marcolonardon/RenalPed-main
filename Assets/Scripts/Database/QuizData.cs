@@ -222,12 +222,11 @@ public class QuizData : MonoBehaviour
         {
             totalScore += ADDSCORE;
             PlayerPrefs.SetInt("TotalQuizScore", totalScore);
-            PlayerPrefs.Save();
             Debug.Log("Total Score---> " + totalScore);
-
-            ScoreManager.Instance.AddQuizScore(MAXSCORE, totalScore);
         }
 
+        PlayerPrefs.SetInt("LastQuizScore", totalScore);
+        PlayerPrefs.Save();
         Debug.LogWarning("Está com --> " + PlayerPrefs.GetInt("TotalQuizScore", 0));
     }
 
@@ -236,7 +235,7 @@ public class QuizData : MonoBehaviour
     {
         Debug.LogWarning("Entrou no LoadScore");
         totalScore = PlayerPrefs.GetInt("TotalQuizScore", 0);
-        Debug.Log("Loaded Total Score---> " + totalScore);
+        ScoreManager.Instance.AddQuizScore(MAXSCORE, totalScore);
     }
 
 

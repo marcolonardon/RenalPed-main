@@ -6,13 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class ItemSlot : MonoBehaviour, IDropHandler
 {
+    private int MAXSCORE = 500;
+    private int ADDSCORE = 71;
+    private int totalScore;
+
     public string[] expectedTags; // Array de tags esperadas dos objetos
     public bool keepActivated;
     private int expectedTotal = 7;
 
     private void Start()
     {
+        Debug.Log("Entrou no start");
         PlayerPrefs.SetInt("TotalDropped", 0);
+        LoadScore();
 
     }
     public void OnDrop(PointerEventData eventData)
@@ -27,6 +33,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             {
                 if (dropped.CompareTag(tag)) // Verifica se a tag é correta e se ainda há espaço no slot
                 {
+
                     draggableItem.parentAfterDrag = transform;
                     // Mantém ou não o objeto ativado conforme a configuração
                     dropped.SetActive(keepActivated);
@@ -34,21 +41,45 @@ public class ItemSlot : MonoBehaviour, IDropHandler
                     // Desativa o objeto dropado para fazê-lo desaparecer
                     Debug.Log("total de objetos dropados: " + PlayerPrefs.GetInt("TotalDropped"));
                     Debug.Log("Objeto dropado com a tag correta: " + tag);
+                    IncrementScore();
                     CompletedCheck();
                     return; // Sai do loop assim que encontrar uma tag correspondente
                 }
+
             }
         }
     }
 
+
+
     private void CompletedCheck()
     {
-        if(PlayerPrefs.GetInt("TotalDropped") == expectedTotal)
+        if (PlayerPrefs.GetInt("TotalDropped") == expectedTotal)
         {
-            ScoreManager.Instance.AddDragCircleScore(1, 1); ///////////////////////////////////////////////////////////////////////
+            ScoreManager.Instance.AddBedRoomScore(MAXSCORE, 500); ///////////////////////////////////////////////////////////////////////
             SceneManager.LoadScene("SpeechBubblePage2");
         }
     }
 
+    private void LoadScore()
+    {
+        Debug.LogWarning("Entrou no LoadScore");
+        totalScore = (PlayerPrefs.GetInt("TotalItemSlotScore", 0));
+    }
+
+    private void IncrementScore()
+    {
+        if (PlayerPrefs.GetInt("TotalItemSlotScore", 0) < MAXSCORE)
+        {
+            totalScore += ADDSCORE;
+            PlayerPrefs.SetInt("TotalItemSlotScore", totalScore);
+            PlayerPrefs.Save();
+            Debug.Log("Total Score---> " + totalScore);
+
+            
+        }
+
+        Debug.LogWarning("Está com --> " + PlayerPrefs.GetInt("TotalItemSlotScore", 0));
+    }
 
 }

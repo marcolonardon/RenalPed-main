@@ -43,20 +43,12 @@ public class TrueFalseData : MonoBehaviour
     void Start()
     {
         LoadScore();
-      
-
         HidePopup();
         originalColor = TrueText.color;
         UIAnimationsDisable();
         getTotalQuestions();
         OnGetQuestion();
         ADDSCORE = MAXSCORE / ((numOfQuizQuestions) + (numOfTFQuestions)); // para que a soma máxima dos acertos sempre fique em 1000 - ignora casas decimais 
-    }
-
-    private void Update()
-    {
-        // Atualiza o valor do totalScore a partir do PlayerPrefs sempre que for chamado
-        totalScore = PlayerPrefs.GetInt("QuizScore", 0);
     }
 
     public void OnGetQuestion()
@@ -164,12 +156,13 @@ public class TrueFalseData : MonoBehaviour
     public void LoadAwardScene()
     {
         int score = ScoreManager.Instance.GetScore();
+        Debug.Log("Final Score = " + score);
 
-        if (score > 10)
+        if (score > 4900)
         {
             SceneManager.LoadScene("Award02");
         }
-        else if (score > 5)
+        else if (score > 2400)
         {
             SceneManager.LoadScene("Award01");
         }
@@ -201,34 +194,30 @@ public class TrueFalseData : MonoBehaviour
         scoreText.gameObject.SetActive(true);
         scoreButton.gameObject.SetActive(true);
 
+        LoadScore();
         SetStars();
         SetMedals();
-        SetScore();
     }
 
     private void SetStars()
     {
+        Debug.LogWarning("Score nas estrelas > " + totalScore);
+        Debug.Log("LastQuizScore -->--> " + PlayerPrefs.GetInt("LastQuizScore", 0));
+
         if (totalScore == MAXSCORE)
         {
-            for (int i = 0; i < Stars.Length; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-            }
+            Stars[0].gameObject.SetActive(true);
+            Stars[2].gameObject.SetActive(true);
+            Stars[1].gameObject.SetActive(true);
         }
         else if (totalScore > MAXSCORE / 2)
         {
-            for (int i = 0; i < Stars.Length; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-                i++;
-            }
+            Stars[0].gameObject.SetActive(true);
+            Stars[2].gameObject.SetActive(true);
         }
         else
         {
-            for (int i = 0; i < Stars.Length - 2; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-            }
+            Stars[0].gameObject.SetActive(true);
         }
     }
 
@@ -248,36 +237,35 @@ public class TrueFalseData : MonoBehaviour
         }
     }
 
-    private void SetScore()
-    {
-        totalScore = PlayerPrefs.GetInt("TrueFalseScore", 0); 
-        Debug.Log("MAXSCORE --> " + MAXSCORE);
-        Debug.Log("TOTALSCORE --> " + totalScore);
-        scoreText.text = totalScore.ToString();
-    }
-
-    
     private void IncrementScore()
     {
-        if (PlayerPrefs.GetInt("TotalTrueFalseScore", 0) < MAXSCORE)
-        {
-            totalScore += ADDSCORE;
-            PlayerPrefs.SetInt("TotalTrueFalseScore", totalScore);
-            PlayerPrefs.Save();
-            Debug.Log("Total Score---> " + totalScore);
+        // Atualize a pontuação total adicionando ADDSCORE
+        totalScore = PlayerPrefs.GetInt("TotalTrueFalseScore", 0) + ADDSCORE;
 
-            ScoreManager.Instance.AddQuizScore(MAXSCORE, totalScore);
-        }
+        // Limite a pontuação total ao máximo permitido
+        totalScore = Mathf.Min(totalScore, MAXSCORE);
 
-        Debug.LogWarning("Está com --> " + PlayerPrefs.GetInt("TotalTrueFalseScore", 0));
+        // Salve a pontuação atualizada no PlayerPrefs
+        PlayerPrefs.SetInt("TotalTrueFalseScore", totalScore);
+        PlayerPrefs.Save();
+        Debug.Log("Total Score no increment---> " + totalScore);
+
+        // Atualize o ScoreManager
+        ScoreManager.Instance.AddQuizScore(MAXSCORE, totalScore);
     }
-
 
     private void LoadScore()
     {
         Debug.LogWarning("Entrou no LoadScore");
-        totalScore = ((PlayerPrefs.GetInt("TotalTrueFalseScore", 0)) + (PlayerPrefs.GetInt("TotalQuizScore")));
-        Debug.Log("Loaded Quiz Total Score>>>>>>>>>>: " + totalScore); ;
-        Debug.Log("Loaded Total Score---> " + totalScore);
+
+        // Carregue a pontuação combinada de TotalTrueFalseScore e TotalQuizScore
+        totalScore = (PlayerPrefs.GetInt("TotalTrueFalseScore", 0) + PlayerPrefs.GetInt("LastQuizScore", 0));
+
+        Debug.LogWarning("TotalTrueFalse == " + PlayerPrefs.GetInt("TotalTrueFalseScore", 0) + "LastQuizScore == " + PlayerPrefs.GetInt("LastQuizScore", 0));
+
+        scoreText.text = totalScore.ToString();
+
+        // Atualize o ScoreManager
+        ScoreManager.Instance.AddQuizScore(MAXSCORE, totalScore);
     }
 }

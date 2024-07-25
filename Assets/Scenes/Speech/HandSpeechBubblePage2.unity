@@ -206,10 +206,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1165237471}
     m_Modifications:
+    - target: {fileID: 3801377638520464570, guid: a3f0574c82adcca4094660abb06a41fe, type: 3}
+      propertyPath: startDelay.scalar
+      value: 2.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5627087509691609296, guid: a3f0574c82adcca4094660abb06a41fe, type: 3}
       propertyPath: m_Name
       value: table
       objectReference: {fileID: 0}
+    - target: {fileID: 5672965265089327257, guid: a3f0574c82adcca4094660abb06a41fe, type: 3}
+      propertyPath: startDelay.scalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996472178421856965, guid: a3f0574c82adcca4094660abb06a41fe, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 812a76d95571e524694440ba866a5044, type: 2}
     - target: {fileID: 6522767671642025865, guid: a3f0574c82adcca4094660abb06a41fe, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -125.1
@@ -306,6 +318,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7877549750947359648, guid: a3f0574c82adcca4094660abb06a41fe, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: acef37e0fe3294b4b838d0618d564b9b, type: 2}
     - target: {fileID: 8320572535181157642, guid: a3f0574c82adcca4094660abb06a41fe, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -408,7 +424,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 630102991}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 43d5378994b5a0144adcd43020c17579, type: 2}
   m_CullingMode: 0
@@ -764,8 +780,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e13124f654c3604b8dbec2932432c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  publicLeaderboardKey: a596ccf54ff34bb440e9425704a73df4181f0c67645112c444554f4962e042fa
+  submitScoreEvent:
+    m_PersistentCalls:
+      m_Calls: []
   TotalScoreText: {fileID: 0}
   PlayerNameText: {fileID: 0}
+  PlayerRank: {fileID: 0}
 --- !u!4 &1008687232
 Transform:
   m_ObjectHideFlags: 0
@@ -1467,7 +1488,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1934764514}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 43d5378994b5a0144adcd43020c17579, type: 2}
   m_CullingMode: 0
@@ -1499,9 +1520,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScoreTable: {fileID: 1256473092}
   Stars:
-  - {fileID: 1224584720}
-  - {fileID: 704810891}
   - {fileID: 2072191959}
+  - {fileID: 704810891}
+  - {fileID: 1224584720}
   Medals:
   - {fileID: 466522570}
   - {fileID: 1934764514}

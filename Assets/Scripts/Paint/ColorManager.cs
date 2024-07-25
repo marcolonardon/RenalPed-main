@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ColorManager : MonoBehaviour 
 {
-    private const int ADDPOINTS = 11;
-    private const int MAXSCORE = 1001;
+    private const int ADDPOINTS = 20;
+    private const int MAXSCORE = 1000;
 
     private string selectedColorHex;
     public List<Button> colorButtons;
@@ -203,14 +203,14 @@ public class ColorManager : MonoBehaviour
 
     private void SetStars()
     {
-        if (totalScore > MAXSCORE / 1.2)
+        if (totalScore == MAXSCORE)
         {
             for (int i = 0; i < Stars.Length; i++)
             {
                 Stars[i].gameObject.SetActive(true);
             }
         }
-        else if (totalScore > MAXSCORE / 2.2)
+        else if (totalScore > MAXSCORE / 1.2)
         {
             for (int i = 0; i < Stars.Length; i++)
             {
@@ -229,11 +229,11 @@ public class ColorManager : MonoBehaviour
 
     private void SetMedals()
     {
-        if (totalScore > MAXSCORE / 1.2)
+        if (totalScore == MAXSCORE)
         {
             Medals[2].gameObject.SetActive(true);
         }
-        else if (totalScore > MAXSCORE / 2.2)
+        else if (totalScore > MAXSCORE / 1.2)
         {
             Medals[1].gameObject.SetActive(true);
         }

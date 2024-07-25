@@ -166,6 +166,10 @@ public class LevelSelection : MonoBehaviour
 
         PlayerPrefs.SetInt("TotalPaintScore", 0);
         PlayerPrefs.SetInt("TotalQuizScore", 0);
+        PlayerPrefs.SetInt("TotalTrueFalseScore", 0);
+        PlayerPrefs.SetInt("TotalItemSlotScore", 0);
+        PlayerPrefs.SetInt("TotalCircleScore", 0);
+        PlayerPrefs.SetInt("TotalWashScore", 0);
 
         PlayerPrefs.SetInt("Customized", 0);
 

@@ -17,8 +17,8 @@ public class WashScore : MonoBehaviour
 
     private void Start()
     {
-        totalScore = PlayerPrefs.GetInt("WashScore", 0);
-        Debug.Log("Loaded Total Score: " + totalScore);
+        totalScore = PlayerPrefs.GetInt("TotalWashScore", 0);
+        Debug.LogWarning("Loaded Total WashScore xxxxxx: " + totalScore);
        
         HidePopup();
         
@@ -69,25 +69,18 @@ public class WashScore : MonoBehaviour
     {
         if (totalScore == MAXSCORE)
         {
-            for (int i = 0; i < Stars.Length; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-            }
+            Stars[0].gameObject.SetActive(true);
+            Stars[2].gameObject.SetActive(true);
+            Stars[1].gameObject.SetActive(true);
         }
         else if (totalScore > MAXSCORE / 2)
         {
-            for (int i = 0; i < Stars.Length; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-                i++;
-            }
+            Stars[0].gameObject.SetActive(true);
+            Stars[2].gameObject.SetActive(true);
         }
         else
         {
-            for (int i = 0; i < Stars.Length - 2; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-            }
+            Stars[0].gameObject.SetActive(true);
         }
     }
 

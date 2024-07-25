@@ -47,14 +47,16 @@ public class SceneNavigation : MonoBehaviour
 
     public void StartWashGame()
     {
-        PlayerPrefs.SetInt("WashScore", 1000);
+        PlayerPrefs.SetInt("TotalWashScore", 1000);
         PlayerPrefs.Save();
         SceneManager.LoadScene("SpeechBubblePage6");
     }
 
     public void StartQuizGame()
     {
-        PlayerPrefs.SetInt("QuizScore", 0);
+        PlayerPrefs.SetInt("TotalQuizScore", 0);
+        PlayerPrefs.SetInt("LastQuizScore", 0);
+        PlayerPrefs.SetInt("TotalTrueFalseScore", 0);
         PlayerPrefs.Save();
         SceneManager.LoadScene("QuizPage");
     }

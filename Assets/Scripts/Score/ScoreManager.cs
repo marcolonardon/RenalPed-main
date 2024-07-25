@@ -8,13 +8,14 @@ using UnityEngine.Events;
 
 public class ScoreManager : MonoBehaviour
 {
-    public string publicLeaderboardKey = "a596ccf54ff34bb440e9425704a73df4181f0c67645112c444554f4962e042fa";
+    public string publicLeaderboardKey = "d28465b89985929d23a736a246562e429b8547ab5cf51088979b94cda94cffae";
     public UnityEvent<string, int> submitScoreEvent;
     // Singleton instance
     public static ScoreManager Instance { get; private set; }
 
     public Text TotalScoreText;
     public Text PlayerNameText;
+    public Text PlayerRank;
 
     public int QuizScore { get; private set; }
     public int TrueFalseScore { get; private set; }
@@ -84,8 +85,9 @@ public class ScoreManager : MonoBehaviour
         Debug.LogWarning("Somando: " + PaintScore + " + " + QuizScore + " + " + TrueFalseScore + " + " + WashHandsScore + " + " + FoodScore + " + " + BedRoomScore + " + " + DragCircleScore);
         if (SceneManager.GetActiveScene().name == "Menu" || SceneManager.GetActiveScene().name == "Ranking")
         {
-            TotalScoreText.text = total.ToString();
-            PlayerNameText.text = PlayerPrefs.GetString("CharacterName", "Nome do Avatar");
+            TotalScoreText.text += total.ToString();
+            PlayerNameText.text += PlayerPrefs.GetString("CharacterName", "Nome do Avatar");
+            PlayerRank.text += PlayerPrefs.GetString("PlayerRank");
         }
 
         PlayerPrefs.SetInt("TotalScore", total);
@@ -128,6 +130,7 @@ public class ScoreManager : MonoBehaviour
 
     public void AddWashHandsScore(int max, int add)
     {
+        Debug.LogWarning("Valor que veio do wash == " + add);
         int score = PlayerPrefs.GetInt("WashScore", 0);
         if (score < add)
         {

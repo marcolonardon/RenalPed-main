@@ -37,7 +37,7 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         PlayerPrefs.SetInt("MinIndex", 9);
         rotateButton.onClick.AddListener(RotateNeedle);
         bacteriaCount = bacterium.Length;
-        AddScore = PlayerPrefs.GetInt("WashScore", 0); 
+        AddScore = PlayerPrefs.GetInt("TotalWashScore", 0); 
     }
 
     void Update()
@@ -99,7 +99,7 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             
             if (PlayerPrefs.GetInt("levelAt") < 3)
                 PlayerPrefs.SetInt("levelAt", 3);
-            PlayerPrefs.SetInt("WashScore", AddScore);
+            PlayerPrefs.SetInt("TotalWashScore", AddScore);
             SceneManager.LoadScene("HandSpeechBubblePage2");
         }
         else
@@ -110,7 +110,7 @@ public class WashHandDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             {
                 AddScore = 0; // Garante que a pontuação não fique negativa
             }
-            PlayerPrefs.SetInt("WashScore", AddScore);
+            PlayerPrefs.SetInt("TotalWashScore", AddScore);
             Debug.Log("Errou. Score --> " + AddScore);
         }
     }

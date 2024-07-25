@@ -6,7 +6,7 @@ public class FoodQuiz : MonoBehaviour
 {
     private const int MAXCORRECT = 4;
     private const int ADDPOINTS = 250;
-    private const int MAXPOINTS = MAXCORRECT * ADDPOINTS;
+    private const int MAXSCORE = MAXCORRECT * ADDPOINTS;
 
 
     public static ScoreMenu Instance;
@@ -101,7 +101,7 @@ public class FoodQuiz : MonoBehaviour
             TotalCorrectAnswers++;
             PointsEarned += ADDPOINTS;
 
-            ScoreManager.Instance.AddFoodScore(MAXPOINTS, PointsEarned);
+            ScoreManager.Instance.AddFoodScore(MAXSCORE, PointsEarned);
         }
         else
         {
@@ -194,25 +194,18 @@ public class FoodQuiz : MonoBehaviour
     {
         if (TotalCorrectAnswers == MAXCORRECT)
         {
-            for (int i = 0; i < Stars.Length; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-            }
+            Stars[0].gameObject.SetActive(true);
+            Stars[2].gameObject.SetActive(true);
+            Stars[1].gameObject.SetActive(true);
         }
         else if (TotalCorrectAnswers >= MAXCORRECT / 2)
         {
-            for (int i = 0; i < Stars.Length; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-                i++;
-            }
+            Stars[0].gameObject.SetActive(true);
+            Stars[2].gameObject.SetActive(true);
         }
         else
         {
-            for (int i = 0; i < Stars.Length-2; i++)
-            {
-                Stars[i].gameObject.SetActive(true);
-            }
+            Stars[0].gameObject.SetActive(true);
         }
     }
 
@@ -235,5 +228,6 @@ public class FoodQuiz : MonoBehaviour
     private void SetScore()
     {
         scoreText.text = PointsEarned.ToString();
+        ScoreManager.Instance.AddFoodScore(MAXSCORE, (ADDPOINTS * TotalCorrectAnswers));
     }
 }

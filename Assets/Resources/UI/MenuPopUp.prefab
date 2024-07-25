@@ -356,8 +356,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e13124f654c3604b8dbec2932432c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  publicLeaderboardKey: d28465b89985929d23a736a246562e429b8547ab5cf51088979b94cda94cffae
+  submitScoreEvent:
+    m_PersistentCalls:
+      m_Calls: []
   TotalScoreText: {fileID: 6637474312223806547}
   PlayerNameText: {fileID: 2502612791504314186}
+  PlayerRank: {fileID: 7092080547248211947}
 --- !u!1 &2178810929891978794
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +762,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Ranking: #012'
+  m_Text: 'Ranking: #'
 --- !u!1 &6210171307567388108
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,7 +1573,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Nomeavatar
+  m_Text: 
 --- !u!1 &9164746127422925370
 GameObject:
   m_ObjectHideFlags: 0

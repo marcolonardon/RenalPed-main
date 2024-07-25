@@ -17,7 +17,7 @@ public class SelectObjects : MonoBehaviour
 
     void Start()
     {
-        AddScore = PlayerPrefs.GetInt("WashScore", 0); // Inicializa AddScore no Start
+        AddScore = PlayerPrefs.GetInt("TotalWashScore", 0); 
         SetAllFalse();
         selectedSequence = new string[3];
     }
@@ -85,7 +85,7 @@ public class SelectObjects : MonoBehaviour
         // Verifica se a sequência Slot4, Slot6, Slot8 está presente na string
         if (sequenceString.Contains("Slot4") && sequenceString.Contains("Slot6") && sequenceString.Contains("Slot8"))
         {
-            PlayerPrefs.SetInt("WashScore", AddScore);
+            PlayerPrefs.SetInt("TotalWashScore", AddScore);
             SceneManager.LoadScene("SpeechBubblePage5");
             Debug.Log("Todos os objetos foram selecionados");
         }
@@ -96,9 +96,9 @@ public class SelectObjects : MonoBehaviour
             {
                 AddScore = 0; // Garante que a pontuação não fique negativa
             }
-            PlayerPrefs.SetInt("WashScore", AddScore);
-            SceneManager.LoadScene("SpeechBubblePage4");
+            PlayerPrefs.SetInt("TotalWashScore", AddScore);
             Debug.Log("Errou. Score --> " + AddScore);
+            SceneManager.LoadScene("SpeechBubblePage4");
         }
     }
 }

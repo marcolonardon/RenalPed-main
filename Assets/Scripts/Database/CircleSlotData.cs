@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
-
 public class CircleDragData : MonoBehaviour
 {
     public Text[] questionText;
@@ -12,8 +11,12 @@ public class CircleDragData : MonoBehaviour
     public Button wrongCongratsButton;
     public Text buttonText;
     public Text checkButtonText;
-    public GameObject exclamationMarkImage;
-    public GameObject congratulationImage;
+    public GameObject Exclamation;
+    public Image ScoreTable;
+    public GameObject[] Stars;
+    public GameObject[] Medals;
+    public Text scoreText;
+    public Button scoreButton;
 
     private int questionIndex = 0;
     private int numOfCircleQuestions;
@@ -24,6 +27,11 @@ public class CircleDragData : MonoBehaviour
     private List<Image> circleImages; // Lista de imagens dos círculos
     private int[] correctCircles;
 
+    private int totalScore = 0;
+    private const int MAXSCORE = 500;
+    private int totalErrors = 0;
+    private int PenaltyScore = 37;
+
     void Start()
     {
         if (PlayerPrefs.GetInt("levelAt") < 4)
@@ -31,6 +39,7 @@ public class CircleDragData : MonoBehaviour
 
         PlayerPrefs.SetInt("MaxIndex", 18);
         PlayerPrefs.SetInt("MinIndex", 13);
+        totalErrors = PlayerPrefs.GetInt("totalCircleErrors", 0);
         disableUI();
         getTotalQuestions();
         resetSlots();
@@ -38,20 +47,26 @@ public class CircleDragData : MonoBehaviour
         circleImages = new List<Image>(); // Inicializa a lista
         FindCircleImages(); // Encontra todas as imagens dos círculos
         correctCircles = new int[6]; // Inicializa o array de círculos corretos
+        LoadScore();
     }
 
     private void Update()
     {
         EnableButton();
         checkUserAnswer();
+       
     }
 
     private void disableUI()
     {
+        if (ScoreTable != null)
+        {
+            HidePopup();
+        }
+
         checkButton.gameObject.SetActive(false);
         wrongCongratsButton.gameObject.SetActive(false);
-        exclamationMarkImage.gameObject.SetActive(false);
-        congratulationImage.gameObject.SetActive(false);
+        Exclamation.gameObject.SetActive(false);
     }
 
     public void OnGetQuestion()
@@ -89,7 +104,7 @@ public class CircleDragData : MonoBehaviour
             if (slotAnswer == correctAnswer)
             {
                 correctCircles[correctAdder] = i;
-                Debug.Log("Index do correctCircles -----> " + correctCircles[correctAdder]);
+                //Debug.Log("Index do correctCircles -----> " + correctCircles[correctAdder]);
                 correctAdder++;
             }
         }
@@ -113,6 +128,7 @@ public class CircleDragData : MonoBehaviour
     public void onClick()
     {
         checkButton.gameObject.SetActive(false);
+        int adder = 0;
 
         for (int i = 1; i <= 6; i++)
         {
@@ -122,12 +138,23 @@ public class CircleDragData : MonoBehaviour
             if (slotAnswer == correctAnswer)
             {
                 PaintCircle(i, Color.green);
+                adder++;
+                Debug.Log("ACERTOU " + adder);
             }
             else
             {
                 PaintCircle(i, Color.red);
             }
         }
+
+
+
+        int errors = numOfCircleQuestions - adder;
+        totalErrors += errors;
+        Debug.LogWarning("errors >>> " + errors + " TotalErrors>>>> " + totalErrors);
+        PlayerPrefs.SetInt("totalCircleErrors", totalErrors);
+        PlayerPrefs.Save();
+
 
         if (correctAdder == totalQuestions)
         {
@@ -141,12 +168,19 @@ public class CircleDragData : MonoBehaviour
 
     private void rightAnswer()
     {
+        LoadScore();
+
         if (PlayerPrefs.GetInt("levelAt") < 4) // Desbloqueia a próxima missão
             PlayerPrefs.SetInt("levelAt", 4);
 
         buttonText.text = "Continuar";
         wrongCongratsButton.gameObject.SetActive(true);
-        congratulationImage.gameObject.SetActive(true);
+        ShowPopup();
+
+        ScoreManager.Instance.AddDragCircleScore(MAXSCORE, totalScore);
+
+        PlayerPrefs.SetInt("totalCircleErrors", 0);
+
         StartCoroutine(WaitForClick("Bonus3"));
     }
 
@@ -154,7 +188,7 @@ public class CircleDragData : MonoBehaviour
     {
         buttonText.text = "Tentar Novamente";
         wrongCongratsButton.gameObject.SetActive(true);
-        exclamationMarkImage.gameObject.SetActive(true);
+        Exclamation.gameObject.SetActive(true);
         StartCoroutine(WaitForClick("DragSequencePage"));
     }
 
@@ -214,4 +248,89 @@ public class CircleDragData : MonoBehaviour
             }
         }
     }
+
+    private void HidePopup()
+    {
+        ScoreTable.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        scoreButton.gameObject.SetActive(false);
+
+        for (int i = 0; i < Stars.Length; i++)
+        {
+            Stars[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < Medals.Length; i++)
+        {
+            Medals[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowPopup()
+    {
+        ScoreTable.gameObject.SetActive(true);
+        scoreText.gameObject.SetActive(true);
+        scoreButton.gameObject.SetActive(true);
+        wrongCongratsButton.gameObject.SetActive(false);
+
+
+        SetStars();
+        SetMedals();
+        LoadScore();
+
+    }
+
+    private void SetStars()
+    {
+        if (totalScore == MAXSCORE)
+        {
+            for (int i = 0; i < Stars.Length; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+            }
+        }
+        else if (totalScore > MAXSCORE / 1.5)
+        {
+            for (int i = 0; i < Stars.Length; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+                i++;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Stars.Length - 2; i++)
+            {
+                Stars[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void SetMedals()
+    {
+        if (totalScore == MAXSCORE)
+        {
+            Medals[2].gameObject.SetActive(true);
+        }
+        else if (totalScore > MAXSCORE / 1.5)
+        {
+            Medals[1].gameObject.SetActive(true);
+        }
+        else
+        {
+            Medals[0].gameObject.SetActive(true);
+        }
+    }
+
+    private void LoadScore()
+    {
+        totalScore = MAXSCORE - (totalErrors * PenaltyScore);
+        if (totalScore < 0) totalScore = 0;
+        scoreText.text = ((totalScore + 500).ToString());
+        Debug.LogWarning("LoadScore == " + totalScore + "TotalErrors == " + totalErrors);
+    }
+
+
+
+
+
 }
