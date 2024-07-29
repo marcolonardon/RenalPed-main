@@ -20,6 +20,9 @@ public class SpeechBubble : MonoBehaviour
 
     private int mainIndex = 0, topIndex = 0;
 
+    private bool isClickAllowed = true; // Flag para controle de clique duplo
+    private float clickDelay = .8f; // Delay entre cliques permitidos
+
     void Start()
     {
         MainBubbleText.text = mainText[0];
@@ -32,31 +35,43 @@ public class SpeechBubble : MonoBehaviour
 
     public void onClick()
     {
-        if (mainIndex < mainText.Length - 1)
+        if (isClickAllowed)
         {
-            mainIndex++;
+            isClickAllowed = false;
+            StartCoroutine(HandleClick());
+
+            if (mainIndex < mainText.Length - 1)
+            {
+                mainIndex++;
+            }
+
+            if (topIndex < topText.Length - 1)
+            {
+                topIndex++;
+            }
+
+            MainBubbleText.text = mainText[mainIndex];
+            TopBubbleText.text = topText[topIndex];
+
+            // Verifica se o índice atual é o índice em que as imagens devem ser ativadas
+            if (mainIndex == loadImage1At)
+            {
+                image1.gameObject.SetActive(true);
+            }
+
+            if (mainIndex == loadImage2At)
+            {
+                image2.gameObject.SetActive(true);
+            }
+
+            StartMission();
         }
+    }
 
-        if (topIndex < topText.Length - 1)
-        {
-            topIndex++;
-        }
-
-        MainBubbleText.text = mainText[mainIndex];
-        TopBubbleText.text = topText[topIndex];
-
-        // Verifica se o índice atual é o índice em que as imagens devem ser ativadas
-        if (mainIndex == loadImage1At)
-        {
-            image1.gameObject.SetActive(true);
-        }
-
-        if (mainIndex == loadImage2At)
-        {
-            image2.gameObject.SetActive(true);
-        }
-
-        StartMission();
+    private IEnumerator HandleClick()
+    {
+        yield return new WaitForSeconds(clickDelay);
+        isClickAllowed = true;
     }
 
     private void StartMission()
