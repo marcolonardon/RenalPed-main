@@ -8,23 +8,40 @@ using UnityEngine.UI;
 public class NameGenerator : MonoBehaviour
 {
     public InputField inputFieldNameText;
+    public Button continueButton; 
 
-    public static int MaxNameIndex = 19; // Inicialize com um valor padrão
-    public static int MaxSurnameIndex = 19; // Inicialize com um valor padrão
+    public static int MaxNameIndex = 19; 
+    public static int MaxSurnameIndex = 19; 
     public static string playerName, playerSurname;
     public static int nameIndex, surnameIndex;
 
     void Start()
     {
+        // Adicione um listener ao inputField para verificar o nome digitado
+        inputFieldNameText.onValueChanged.AddListener(delegate { CheckNameInput(); });
+
         // Obtenha os índices máximos antes de gerar nomes
         GetMaxIndex().ContinueWith(task =>
         {
             if (PlayerPrefs.GetInt("Customized", 0) != 1)
             {
+                continueButton.interactable = false; // Desativa o botão de continuar se o nome ainda não foi personalizado
                 Generate();
+                
             }
-
+            else
+            {
+                // Se já estiver customizado, carregar o nome salvo e habilitar o botão se necessário
+                inputFieldNameText.text = PlayerPrefs.GetString("CharacterName", "");
+                CheckNameInput(); // Verifica se o nome foi carregado e ativa o botão de continuar
+            }
         });
+    }
+
+    private void CheckNameInput()
+    {
+        // Ativa o botão de continuar apenas se o campo de nome não estiver vazio
+        continueButton.interactable = !string.IsNullOrEmpty(inputFieldNameText.text);
     }
 
     private int GenerateRandomNumber(int min, int max)
@@ -38,16 +55,14 @@ public class NameGenerator : MonoBehaviour
 
         var tcs = new TaskCompletionSource<bool>();
 
-        RestClient.Get<User>("https://renal-ped-f3573-default-rtdb.firebaseio.com/Player/random_names/0/" + nameIndex+".json").Then(response =>
+        RestClient.Get<User>("https://renal-ped-f3573-default-rtdb.firebaseio.com/Player/random_names/0/" + nameIndex + ".json").Then(response =>
         {
             playerName = response.name;
             tcs.SetResult(true);
-            //Debug.Log("Nome --> " + playerName);
         }).Catch(error =>
         {
             Debug.LogError("Erro ao obter dados do banco de dados: " + error);
             tcs.SetException(new Exception("Erro na requisição de GenerateName"));
-
         });
 
         await tcs.Task;
@@ -63,7 +78,6 @@ public class NameGenerator : MonoBehaviour
         {
             playerSurname = response.surname;
             tcs.SetResult(true);
-            //Debug.Log("Sobrenome --> " + playerSurname);
         }).Catch(error =>
         {
             Debug.LogError("Erro ao obter dados do banco de dados: " + error);
@@ -84,15 +98,13 @@ public class NameGenerator : MonoBehaviour
             PlayerPrefs.SetInt("MaxNamesIndex", MaxNameIndex);
             PlayerPrefs.SetInt("MaxLastNamesIndex", MaxSurnameIndex);
             PlayerPrefs.Save();
-            //Debug.Log("Baixou do Firebase ----> " + PlayerPrefs.GetInt("MaxNamesIndex"));
-            tcs.SetResult(true); // Marca a tarefa como concluída com sucesso
+            tcs.SetResult(true);
         }).Catch(error =>
         {
             Debug.LogError("Erro ao obter quantidade de nomes: " + error);
-            tcs.SetException(new Exception("Erro na requisição de GetMaxIndex")); // Marca a tarefa com exceção em caso de erro
+            tcs.SetException(new Exception("Erro na requisição de GetMaxIndex"));
         });
 
-        // Aguarda a conclusão da tarefa
         await tcs.Task;
     }
 
@@ -100,9 +112,10 @@ public class NameGenerator : MonoBehaviour
     {
         await GenerateName();
         await GenerateLastName();
-        PlayerPrefs.SetString("CharacterName", playerName+playerSurname);
+        PlayerPrefs.SetString("CharacterName", playerName + playerSurname);
         PlayerPrefs.Save();
         inputFieldNameText.text = PlayerPrefs.GetString("CharacterName");
         Debug.Log("Nome completo --->>>" + PlayerPrefs.GetString("CharacterName"));
+        CheckNameInput(); // Verifica se o nome foi gerado e ativa o botão de continuar
     }
 }

@@ -29,7 +29,7 @@ public class SavePlayerPrefs : MonoBehaviour
 
         // Reativa o botão PlayButton
         PlayButton.interactable = true;
-        StatusMessage.text = "";
+        StatusMessage.text = "Toque na tela para iniciar";
     }
 
 

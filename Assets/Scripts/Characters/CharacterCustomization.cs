@@ -220,7 +220,7 @@ public class CharacterCustomization : MonoBehaviour
         if (currentAccessoryIndex >= 0) UpdateAccessory(currentAccessoryIndex); else accessoryImage.color = new Color(0, 0, 0, 0);
         if (SceneManager.GetActiveScene().name == "CharacterPage4")
         {
-            characterNameInputField.text = PlayerPrefs.GetString("CharacterName", "Nome do Avatar");
+            characterNameInputField.text = PlayerPrefs.GetString("CharacterName", "");
         }
     }
 
