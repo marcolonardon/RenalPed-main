@@ -421,7 +421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &568240208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -997,6 +997,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e13124f654c3604b8dbec2932432c71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  publicLeaderboardKey: d28465b89985929d23a736a246562e429b8547ab5cf51088979b94cda94cffae
+  submitScoreEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  TotalScoreText: {fileID: 0}
+  PlayerNameText: {fileID: 0}
+  PlayerRank: {fileID: 0}
 --- !u!4 &916714498
 Transform:
   m_ObjectHideFlags: 0
@@ -1466,12 +1473,12 @@ GameObject:
   - component: {fileID: 1426973633}
   - component: {fileID: 1426973632}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Proxima
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1426973631
 RectTransform:
   m_ObjectHideFlags: 0
