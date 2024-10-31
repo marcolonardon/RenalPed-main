@@ -53,7 +53,7 @@ public class TrueFalseData : MonoBehaviour
 
     public void OnGetQuestion()
     {
-        questionText.text = PlayerPrefs.GetString("TrueFalseQuestion" + questionIndex);
+        questionText.text = "A lavagem correta das mãos e a limpeza do local onde é realizada a diálise são fatores importantes na prevenção de Peritonite.";
     }
 
     private void UIAnimationsDisable()
@@ -66,7 +66,7 @@ public class TrueFalseData : MonoBehaviour
 
     public void CheckTrueButton()
     {
-        questionAnswer = PlayerPrefs.GetString("TrueFalseAnswer" + questionIndex);
+        questionAnswer = "true";
 
         if (questionAnswer == "true")
         {
@@ -87,7 +87,7 @@ public class TrueFalseData : MonoBehaviour
 
     public void CheckFalseButton()
     {
-        questionAnswer = PlayerPrefs.GetString("TrueFalseAnswer" + questionIndex);
+        questionAnswer = "true";
 
         if (questionAnswer == "false")
         {
@@ -135,8 +135,8 @@ public class TrueFalseData : MonoBehaviour
 
     private void getTotalQuestions()
     {
-        numOfTFQuestions = PlayerPrefs.GetInt("TotalTrueFalseQuestions");
-        numOfQuizQuestions = PlayerPrefs.GetInt("TotalQuizQuestions");
+        numOfTFQuestions = 1;
+        numOfQuizQuestions = 4;
     }
 
     private IEnumerator WaitAndGoToNextQuestion()

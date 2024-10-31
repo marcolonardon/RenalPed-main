@@ -73,15 +73,58 @@ public class QuizData : MonoBehaviour
 
     private void UpdateQuestion()
     {
-        questionText.text = PlayerPrefs.GetString("QuizQuestion" + myQuizIndex);
+        switch (myQuizIndex)
+        {
+            case 0:
+                questionText.text = "O que é peritonite";
+                break;
+            case 1:
+                questionText.text = "Quais são os principais sintomas da Peritonite";
+                break;
+            case 2:
+                questionText.text = "O que fazer em casos de sintomas de peritonite";
+                break;
+            case 3:
+                questionText.text = "O que fazer em casos de desconexão do cateter ou da tampa protetora";
+                break;
+        }
+
+        //questionText.text = PlayerPrefs.GetString("QuizQuestion" + myQuizIndex);
 
     }
 
     private void UpdateAnswer()
     {
-        AAnswerText.text = PlayerPrefs.GetString("QuizAnswerA" + myQuizIndex);
-        BAnswerText.text = PlayerPrefs.GetString("QuizAnswerB" + myQuizIndex);
-        CAnswerText.text = PlayerPrefs.GetString("QuizAnswerC" + myQuizIndex);
+        switch(myQuizIndex)
+        {
+            case 0:
+                AAnswerText.text = "Nome dado à máquina de diálise.";
+                BAnswerText.text = "Infecção no peritônio (barriga).";
+                CAnswerText.text = "Infecção no sangue.";
+                break;
+            case 1:
+                AAnswerText.text = "Febre, dor de cabeça e líquido claro.";
+                BAnswerText.text = "Febre, dor abdominal e líquido transparente.";
+                CAnswerText.text = "Febre, dor abdominal e líquido turvo.";
+                break;
+            case 2:
+                AAnswerText.text = "Continuar normalmente a diálise, não é grave.";
+                BAnswerText.text = "Procurar imediatamente o seu serviço de diálise.";
+                CAnswerText.text = "Encerrar a diálise e tomar remédio para dor.";
+                break;
+            case 3:
+                AAnswerText.text = "Encaixar novamente o cateter e a tampa.";
+                BAnswerText.text = "Apenas colocar um tampa (prep kit) nova.";
+                CAnswerText.text = "Procurar o serviço de diálise imediatamente para troca do sistema com técnica estéril.";
+                break;
+        }
+
+
+        PlayerPrefs.SetInt("QuizAudioIndex", myQuizIndex);
+
+        //AAnswerText.text = PlayerPrefs.GetString("QuizAnswerA" + myQuizIndex);
+        //BAnswerText.text = PlayerPrefs.GetString("QuizAnswerB" + myQuizIndex);
+        //CAnswerText.text = PlayerPrefs.GetString("QuizAnswerC" + myQuizIndex);
     }
 
     //private void PostToDatabase()
@@ -92,7 +135,23 @@ public class QuizData : MonoBehaviour
 
     private void RetriveFromDatabase()
     {
-        playerCorrectAnswer = PlayerPrefs.GetString("QuizCorrectAnswer" + myQuizIndex);
+
+        switch (myQuizIndex)
+        {
+            case 0:
+                playerCorrectAnswer = "b";
+                break;
+            case 1:
+                playerCorrectAnswer = "c";
+                break;
+            case 2:
+                playerCorrectAnswer = "b";
+                break;
+            case 3:
+                playerCorrectAnswer = "c";
+                break;
+        }
+   
         UpdateQuestion();
         UpdateAnswer();
     }
@@ -124,8 +183,8 @@ public class QuizData : MonoBehaviour
 
     private void getTotalQuestions()
     {
-        numOfQuizQuestions = PlayerPrefs.GetInt("TotalQuizQuestions");
-        numOfTFQuestions = PlayerPrefs.GetInt("TotalTrueFalseQuestions");
+        numOfQuizQuestions = 4;
+        numOfTFQuestions = 1;
     }
 
     public void CheckAButton(string op)
@@ -227,13 +286,13 @@ public class QuizData : MonoBehaviour
 
         PlayerPrefs.SetInt("LastQuizScore", totalScore);
         PlayerPrefs.Save();
-        Debug.LogWarning("Está com --> " + PlayerPrefs.GetInt("TotalQuizScore", 0));
+        //Debug.LogWarning("Está com --> " + PlayerPrefs.GetInt("TotalQuizScore", 0));
     }
 
 
     private void LoadScore()
     {
-        Debug.LogWarning("Entrou no LoadScore");
+        //Debug.LogWarning("Entrou no LoadScore");
         totalScore = PlayerPrefs.GetInt("TotalQuizScore", 0);
         ScoreManager.Instance.AddQuizScore(MAXSCORE, totalScore);
     }

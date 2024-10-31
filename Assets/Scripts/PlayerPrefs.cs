@@ -22,10 +22,10 @@ public class SavePlayerPrefs : MonoBehaviour
         StatusMessage.text = "Verificando Atualizações";
 
         // Verifica a versão do bd para atualizar
-        await CheckUpdates();
+        //await CheckUpdates();
 
         // Atualiza o texto da versão
-        ShowVersion.text = "V: " + PlayerPrefs.GetFloat("DataBaseVersion");
+        //ShowVersion.text = "V: " + PlayerPrefs.GetFloat("DataBaseVersion");
 
         // Reativa o botão PlayButton
         PlayButton.interactable = true;

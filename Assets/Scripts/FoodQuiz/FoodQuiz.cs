@@ -128,7 +128,9 @@ public class FoodQuiz : MonoBehaviour
         if (currentIndex < totalOfQuestions - 1)
         {
             currentIndex++;
-            //Debug.Log("index: " + currentIndex);
+            //Debug.Log("indexxxxxxxxxxxxxxxxxxxx: " + currentIndex);
+            PlayerPrefs.SetInt("FoodQuestionAudioIndex", currentIndex);
+            PlayerPrefs.Save();
         }
         else //chegou na última questão
         {

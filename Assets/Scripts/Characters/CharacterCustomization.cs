@@ -127,7 +127,7 @@ public class CharacterCustomization : MonoBehaviour
     // Métodos para atualizar a imagem com a sprite atual
     private void UpdateBody(int index)
     {
-        if (index >= 0)
+        if (index >= 0 && bodyOptions[index] != null)
         {
             bodyImage.sprite = bodyOptions[index];
             bodyImage.color = Color.white; // Restaura a cor ao definir uma nova sprite
@@ -136,7 +136,7 @@ public class CharacterCustomization : MonoBehaviour
 
     private void UpdateFace(int index)
     {
-        if (index >= 0)
+        if (index >= 0 && faceOptions[index] != null)
         {
             faceImage.sprite = faceOptions[index];
             faceImage.color = Color.white; // Restaura a cor ao definir uma nova sprite
@@ -145,7 +145,7 @@ public class CharacterCustomization : MonoBehaviour
 
     private void UpdateHair(int index)
     {
-        if (index >= 0)
+        if (index >= 0 && hairOptions[index] != null)
         {
             hairImage.sprite = hairOptions[index];
             hairImage.color = Color.white; // Restaura a cor ao definir uma nova sprite
@@ -154,7 +154,7 @@ public class CharacterCustomization : MonoBehaviour
 
     private void UpdateClothes(int index)
     {
-        if (index >= 0)
+        if (index >= 0 && clothesOptions[index] != null)
         {
             clothesImage.sprite = clothesOptions[index];
             clothesImage.color = Color.white; // Restaura a cor ao definir uma nova sprite
@@ -163,8 +163,10 @@ public class CharacterCustomization : MonoBehaviour
 
     private void UpdateAccessory(int index)
     {
-        if (index >= 0)
+        Debug.Log("Index do update acessory: " + index);
+        if (index >= 0 && accessoryOptions[index] != null)
         {
+            Debug.Log("Entrou no if do update acessory: " + index);
             accessoryImage.sprite = accessoryOptions[index];
             accessoryImage.color = Color.white; // Restaura a cor ao definir uma nova sprite
         }
@@ -212,17 +214,49 @@ public class CharacterCustomization : MonoBehaviour
     // Função para atualizar a aparência do personagem com base nas configurações salvas
     private void UpdateCharacterAppearance()
     {
-        if (currentBodyIndex >= 0) UpdateBody(currentBodyIndex); else bodyImage.color = new Color(0, 0, 0, 0);
-        if (currentFaceIndex >= 0) UpdateFace(currentFaceIndex); else faceImage.color = new Color(0, 0, 0, 0);
-        if (currentHairIndex >= 0) UpdateHair(currentHairIndex); else hairImage.color = new Color(0, 0, 0, 0);
-        if (currentBodyColorIndex >= 0) UpdateBodyColor(); else bodyImage.color = new Color(0, 0, 0, 0);
-        if (currentClothesIndex >= 0) UpdateClothes(currentClothesIndex); else clothesImage.color = new Color(0, 0, 0, 0);
-        if (currentAccessoryIndex >= 0) UpdateAccessory(currentAccessoryIndex); else accessoryImage.color = new Color(0, 0, 0, 0);
-        if (SceneManager.GetActiveScene().name == "CharacterPage4")
+        // Verifica se o bodyImage não é nulo e se o índice é válido
+        if (bodyImage != null && currentBodyIndex >= 0)
+            UpdateBody(currentBodyIndex);
+        else if (bodyImage != null)
+            bodyImage.color = new Color(0, 0, 0, 0);
+
+        // Verifica se o faceImage não é nulo e se o índice é válido
+        if (faceImage != null && currentFaceIndex >= 0)
+            UpdateFace(currentFaceIndex);
+        else if (faceImage != null)
+            faceImage.color = new Color(0, 0, 0, 0);
+
+        // Verifica se o hairImage não é nulo e se o índice é válido
+        if (hairImage != null && currentHairIndex >= 0)
+            UpdateHair(currentHairIndex);
+        else if (hairImage != null)
+            hairImage.color = new Color(0, 0, 0, 0);
+
+        // Verifica se o bodyImage não é nulo e se o índice de cor é válido
+        if (bodyImage != null && currentBodyColorIndex >= 0)
+            UpdateBodyColor();
+        else if (bodyImage != null)
+            bodyImage.color = new Color(0, 0, 0, 0);
+
+        // Verifica se o clothesImage não é nulo e se o índice é válido
+        if (clothesImage != null && currentClothesIndex >= 0)
+            UpdateClothes(currentClothesIndex);
+        else if (clothesImage != null)
+            clothesImage.color = new Color(0, 0, 0, 0);
+
+        // Verifica se o accessoryImage não é nulo e se o índice é válido
+        if (accessoryImage != null && currentAccessoryIndex >= 0)
+            UpdateAccessory(currentAccessoryIndex);
+        else if (accessoryImage != null)
+            accessoryImage.color = new Color(0, 0, 0, 0);
+
+        // Verifica se a cena ativa é "CharacterPage4" e se o campo de entrada de nome não é nulo
+        if (SceneManager.GetActiveScene().name == "CharacterPage4" && characterNameInputField != null)
         {
             characterNameInputField.text = PlayerPrefs.GetString("CharacterName", "");
         }
     }
+
 
     public void SetCustomizationAsDone()
     {

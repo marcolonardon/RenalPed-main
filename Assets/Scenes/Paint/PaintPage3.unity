@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -271,7 +268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &42839317
 RectTransform:
   m_ObjectHideFlags: 0
@@ -543,6 +540,7 @@ RectTransform:
   - {fileID: 1371153558}
   - {fileID: 42839317}
   - {fileID: 1997110357}
+  - {fileID: 602630011}
   m_Father: {fileID: 921952662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1216,7 +1214,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &383957002
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1230,6 +1228,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -1763,6 +1762,135 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598963672}
   m_CullTransparentMesh: 1
+--- !u!1001 &602630010
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 201533971}
+    m_Modifications:
+    - target: {fileID: 473567642492128998, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 473567642492128998, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 602630012}
+    - target: {fileID: 473567642492128998, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Button, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: 'narrationClip.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d933b449510ce314a9f87539cf6bdded, type: 3}
+    - target: {fileID: 8015506583788748562, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_Name
+      value: AudioButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 182.8073
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 146.0417
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -96.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -84.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+--- !u!224 &602630011 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8828844834564792055, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+  m_PrefabInstance: {fileID: 602630010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &602630012 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 473567642492128998, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
+  m_PrefabInstance: {fileID: 602630010}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &604072350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3031,7 +3159,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Tomar de 10 a 15 minutinhos de sol na barriguinha todos os dias ajuda
-    na cicatriza\xE7\xE3o e na manuten\xE7\xE3o do cateter, al\xE9m de fazere bem
+    na cicatriza\xE7\xE3o e na manuten\xE7\xE3o do cateter, al\xE9m de fazer bem
     para muitas outras coisas no nosso corpinho."
 --- !u!222 &987901295
 CanvasRenderer:
@@ -4460,7 +4588,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &1433983996
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4474,6 +4602,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -4791,7 +4920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!95 &1805800726
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4805,6 +4934,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -5137,7 +5267,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &2031010807
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5151,6 +5281,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

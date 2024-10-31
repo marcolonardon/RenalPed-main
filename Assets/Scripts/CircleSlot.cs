@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Threading;
+using Unity.VisualScripting;
 
 public class CircleSlot : MonoBehaviour, IDropHandler
 {
@@ -12,9 +13,26 @@ public class CircleSlot : MonoBehaviour, IDropHandler
     public bool keepItemActivated;
 
     private string currentItemTag; // Tag atual do item no slot
+    private int counter;
+
+    void Start()
+    {
+        PlayerPrefs.SetInt("TotalCirclesDroped", 0);
+    }
+    private void DropCounter()
+    {
+        counter = PlayerPrefs.GetInt("TotalCirclesDroped", 0);
+        Debug.LogWarning("Iniciou com counter = "+counter);
+        if (counter >= 6 || counter <= 0)
+        {
+            counter = 0;
+        }
+    }
+    
 
     public void OnItemDropped(PointerEventData eventData)
     {
+        DropCounter();
         GameObject droppedObject = eventData.pointerDrag;
         DragDrop draggableItem = droppedObject.GetComponent<DragDrop>();
 
@@ -41,6 +59,10 @@ public class CircleSlot : MonoBehaviour, IDropHandler
                 }
             }
 
+            counter++;
+            PlayerPrefs.SetInt("TotalCirclesDroped", counter);
+            PlayerPrefs.Save();
+            Debug.LogWarning("Dropou " + counter);
             
         }
     }

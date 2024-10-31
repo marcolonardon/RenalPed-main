@@ -61,6 +61,20 @@ public class SceneNavigation : MonoBehaviour
         SceneManager.LoadScene("QuizPage");
     }
 
+    public void StartFoodQuiz()
+    {
+        PlayerPrefs.SetInt("FoodQuestionIndex", 0);
+        PlayerPrefs.SetInt("FoodQuestionAudioIndex", 0);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("SpeechBubblePage7");
+    }
+
+    public void StartDragDrop()
+    {
+        PlayerPrefs.SetInt("SpeechBubbleAudioIndex", 0);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("SpeechBubblePage");
+    }
 
 
 

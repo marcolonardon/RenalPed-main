@@ -5,9 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/WebAlert.unity
+    guid: 19c4921f46b18144c8704751c7de2a3e
   - enabled: 1
     path: Assets/Scenes/InitialPage.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Characters/CharacterPage1.unity
+    guid: b4e27805430b73640b528845cd90c3b0
+  - enabled: 1
+    path: Assets/Scenes/Characters/CharacterPage3.unity
+    guid: e0f3d3b442204034db6c364af9b896c2
+  - enabled: 1
+    path: Assets/Scenes/Characters/CharacterPage2.unity
+    guid: 6a2c2075b2e28ce47b296d21ede74a24
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 863817fadeee1d04dab1f455adaaa697
@@ -86,15 +98,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Speech/SpeechBubblePage9.unity
     guid: d68c6a5958a464c49b9cd84a57c35185
-  - enabled: 1
-    path: Assets/Scenes/Characters/CharacterPage1.unity
-    guid: b4e27805430b73640b528845cd90c3b0
-  - enabled: 1
-    path: Assets/Scenes/Characters/CharacterPage2.unity
-    guid: 6a2c2075b2e28ce47b296d21ede74a24
-  - enabled: 1
-    path: Assets/Scenes/Characters/CharacterPage3.unity
-    guid: e0f3d3b442204034db6c364af9b896c2
   - enabled: 1
     path: Assets/Scenes/Speech/SpeechBubblePage1.unity
     guid: 043041956fdd32f49b816019da701472

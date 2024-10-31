@@ -526,11 +526,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button1: {fileID: 0}
-  _button2: {fileID: 0}
-  _button1Text: {fileID: 0}
-  _button2Text: {fileID: 0}
-  _topPopupText: {fileID: 0}
-  _mainPopupText: {fileID: 0}
+  _characterButton: {fileID: 0}
+  _homeButton: {fileID: 0}
+  _infoButton: {fileID: 0}
+  _rankingButton: {fileID: 0}
 --- !u!1 &7702158230021383541
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,11 +699,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button1: {fileID: 6363253958588068299}
-  _button2: {fileID: 7123956352459715148}
-  _button1Text: {fileID: 9220202272640964024}
-  _button2Text: {fileID: 6844270934790408445}
-  _topPopupText: {fileID: 7131550040860067065}
-  _mainPopupText: {fileID: 2342591528333159751}
+  _characterButton: {fileID: 0}
+  _homeButton: {fileID: 0}
+  _infoButton: {fileID: 0}
+  _rankingButton: {fileID: 0}
 --- !u!1 &8912670880978525552
 GameObject:
   m_ObjectHideFlags: 0

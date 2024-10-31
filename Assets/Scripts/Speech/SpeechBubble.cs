@@ -18,10 +18,12 @@ public class SpeechBubble : MonoBehaviour
     public int loadImage1At;
     public int loadImage2At;
 
+    public Button targetButton; // Botão específico para transição de cena
+
     private int mainIndex = 0, topIndex = 0;
 
     private bool isClickAllowed = true; // Flag para controle de clique duplo
-    private float clickDelay = .8f; // Delay entre cliques permitidos
+    private float clickDelay = .4f; // Delay entre cliques permitidos
 
     void Start()
     {
@@ -29,8 +31,17 @@ public class SpeechBubble : MonoBehaviour
         TopBubbleText.text = topText[0];
 
         // Desativa as imagens no início
-        image1.gameObject.SetActive(false);
-        image2.gameObject.SetActive(false);
+        if (image1 != null)
+            image1.gameObject.SetActive(false);
+        if (image2 != null)
+            image2.gameObject.SetActive(false);
+
+        // Associa o botão ao método de mudança de cena
+        if (targetButton != null)
+        {
+            targetButton.gameObject.SetActive(false);
+            targetButton.onClick.AddListener(() => StartCoroutine(LoadNextScene()));
+        }
     }
 
     public void onClick()
@@ -43,6 +54,7 @@ public class SpeechBubble : MonoBehaviour
             if (mainIndex < mainText.Length - 1)
             {
                 mainIndex++;
+                PlayerPrefs.SetInt("SpeechBubbleAudioIndex", mainIndex);
             }
 
             if (topIndex < topText.Length - 1)
@@ -76,20 +88,16 @@ public class SpeechBubble : MonoBehaviour
 
     private void StartMission()
     {
-        if (mainIndex == mainText.Length - 1 && topIndex == topText.Length - 1)
+        if (mainIndex == mainText.Length - 1 && targetButton != null)
         {
-            StartCoroutine(LoadNextScene());
+            // Ativa o botão específico para transição de cena
+            targetButton.gameObject.SetActive(true);
         }
     }
 
     private IEnumerator LoadNextScene()
     {
-        // Aguarda até o clique
-        while (!Input.GetMouseButtonDown(0))
-        {
-            yield return null;
-        }
-
         SceneManager.LoadScene(sceneToLoad);
+        yield return null;
     }
 }

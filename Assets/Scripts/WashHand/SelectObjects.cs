@@ -17,7 +17,7 @@ public class SelectObjects : MonoBehaviour
 
     void Start()
     {
-        AddScore = PlayerPrefs.GetInt("TotalWashScore", 0); 
+        AddScore = PlayerPrefs.GetInt("TotalWashScore", 1000); 
         SetAllFalse();
         selectedSequence = new string[3];
     }

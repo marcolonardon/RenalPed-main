@@ -19,6 +19,8 @@ public class FoodPopup : MonoBehaviour
         //Debug.Log("IndexHelper antes: " + indexHelper);
         SetKidneysSprite(KidneysSprite[IndexIncreaser()]);
         IndexIncreaser();
+        PlayerPrefs.SetInt("FoodPopupAudioIndex", IndexIncreaser());
+        PlayerPrefs.Save();
         //Debug.Log("IndexHelper depois: " + indexHelper);
 
 

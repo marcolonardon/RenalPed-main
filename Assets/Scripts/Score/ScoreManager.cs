@@ -82,7 +82,7 @@ public class ScoreManager : MonoBehaviour
                     FoodScore +
                     BedRoomScore +
                     DragCircleScore;
-        Debug.LogWarning("Somando: " + PaintScore + " + " + QuizScore + " + " + TrueFalseScore + " + " + WashHandsScore + " + " + FoodScore + " + " + BedRoomScore + " + " + DragCircleScore);
+        //Debug.LogWarning("Somando: " + PaintScore + " + " + QuizScore + " + " + TrueFalseScore + " + " + WashHandsScore + " + " + FoodScore + " + " + BedRoomScore + " + " + DragCircleScore);
         if (SceneManager.GetActiveScene().name == "Menu" || SceneManager.GetActiveScene().name == "Ranking")
         {
             TotalScoreText.text += total.ToString();

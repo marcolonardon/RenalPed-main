@@ -9,7 +9,7 @@ public class LeaderboardUpdater : MonoBehaviour
 {
     public Text rankText;
 
-    public string publicLeaderboardKey = "d28465b89985929d23a736a246562e429b8547ab5cf51088979b94cda94cffae";
+    public string publicLeaderboardKey = "cdf8d48335594026f4e0aa81c3880047ab34ca0e4d99d0ec2236a4d49ebb0c05";
 
     public UnityEvent<string, int> submitScoreEvent;
 

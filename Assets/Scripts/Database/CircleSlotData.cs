@@ -8,8 +8,6 @@ public class CircleDragData : MonoBehaviour
 {
     public Text[] questionText;
     public Button checkButton;
-    public Button wrongCongratsButton;
-    public Text buttonText;
     public Text checkButtonText;
     public GameObject Exclamation;
     public Image ScoreTable;
@@ -32,8 +30,12 @@ public class CircleDragData : MonoBehaviour
     private int totalErrors = 0;
     private int PenaltyScore = 37;
 
+
     void Start()
     {
+
+        checkButtonText.text = "Avançar";
+
         if (PlayerPrefs.GetInt("levelAt") < 4)
             PlayerPrefs.SetInt("levelAt", 4);
 
@@ -65,23 +67,22 @@ public class CircleDragData : MonoBehaviour
         }
 
         checkButton.gameObject.SetActive(false);
-        wrongCongratsButton.gameObject.SetActive(false);
         Exclamation.gameObject.SetActive(false);
     }
 
     public void OnGetQuestion()
     {
-        for (int i = 0; i < numOfCircleQuestions; i++)
-        {
-            questionText[i].text = PlayerPrefs.GetString("CircleSlotQuestion" + i);
-        }
-
-        PlayerPrefs.Save();
+        questionText[0].text = "Lavagem das mãos para desconexão do cateter";
+        questionText[1].text = "Desconexão do cateter após término da terapia";
+        questionText[2].text = "Limpeza do quarto e dos materiais da diálise";
+        questionText[3].text = "Instalação e conexão da terapia";
+        questionText[4].text = "Lavagem das mãos para conexão da terapia";
+        questionText[5].text = "Desligar máquina e desprezar os materiais em lixo comum";
     }
 
     private void getTotalQuestions()
     {
-        numOfCircleQuestions = PlayerPrefs.GetInt("TotalCircleSlotQuestions");
+        numOfCircleQuestions = 6;
     }
 
     private void resetSlots()
@@ -96,7 +97,7 @@ public class CircleDragData : MonoBehaviour
     {
         correctAdder = 0;
 
-        for (int i = 1; i <= 6; i++)
+        for (int i = 1; i <= numOfCircleQuestions; i++)
         {
             string slotAnswer = PlayerPrefs.GetString("CircleSlot" + i);
             string correctAnswer = "Circle" + i;
@@ -104,14 +105,16 @@ public class CircleDragData : MonoBehaviour
             if (slotAnswer == correctAnswer)
             {
                 correctCircles[correctAdder] = i;
-                //Debug.Log("Index do correctCircles -----> " + correctCircles[correctAdder]);
                 correctAdder++;
             }
         }
 
+        // Atualiza o número de respostas corretas
         PlayerPrefs.SetInt("CircleSlotCorrectAdder", correctAdder);
-        totalQuestions = PlayerPrefs.GetInt("TotalCircleSlotQuestions");
+        totalQuestions = numOfCircleQuestions;
     }
+
+
 
     private void PaintCircle(int circleIndex, Color color)
     {
@@ -127,44 +130,51 @@ public class CircleDragData : MonoBehaviour
 
     public void onClick()
     {
-        checkButton.gameObject.SetActive(false);
         int adder = 0;
 
-        for (int i = 1; i <= 6; i++)
+        for (int i = 1; i <= numOfCircleQuestions; i++)
         {
             string slotAnswer = PlayerPrefs.GetString("CircleSlot" + i);
             string correctAnswer = "Circle" + i;
 
             if (slotAnswer == correctAnswer)
             {
-                PaintCircle(i, Color.green);
+                PaintCircle(i, Color.green);  // Pinta o círculo de verde se estiver correto
                 adder++;
-                Debug.Log("ACERTOU " + adder);
             }
             else
             {
-                PaintCircle(i, Color.red);
+                PaintCircle(i, Color.red);    // Pinta o círculo de vermelho se estiver errado
             }
         }
 
-
+        Debug.Log("Adder: " + adder);  // Verifique se o número de respostas corretas está correto
 
         int errors = numOfCircleQuestions - adder;
         totalErrors += errors;
-        Debug.LogWarning("errors >>> " + errors + " TotalErrors>>>> " + totalErrors);
         PlayerPrefs.SetInt("totalCircleErrors", totalErrors);
         PlayerPrefs.Save();
 
-
-        if (correctAdder == totalQuestions)
+        if (adder == totalQuestions)
         {
             rightAnswer();
         }
         else
         {
-            wrongAnswer();
+            Debug.Log("entrou no else-resposta incorreta");
+            wrongAnswer();  // Este método deve ser chamado se houver erros
         }
     }
+
+
+
+    private void RestartLevel()
+    {
+        Debug.Log("Reiniciando o nível");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);  // Reinicia a cena atual
+    }
+
+
 
     private void rightAnswer()
     {
@@ -173,24 +183,29 @@ public class CircleDragData : MonoBehaviour
         if (PlayerPrefs.GetInt("levelAt") < 4) // Desbloqueia a próxima missão
             PlayerPrefs.SetInt("levelAt", 4);
 
-        buttonText.text = "Continuar";
-        wrongCongratsButton.gameObject.SetActive(true);
+        checkButtonText.text = "Avançar";  // Muda o texto do botão
         ShowPopup();
 
         ScoreManager.Instance.AddDragCircleScore(MAXSCORE, totalScore);
 
         PlayerPrefs.SetInt("totalCircleErrors", 0);
-
         StartCoroutine(WaitForClick("Bonus3"));
     }
 
     private void wrongAnswer()
     {
-        buttonText.text = "Tentar Novamente";
-        wrongCongratsButton.gameObject.SetActive(true);
+        //wrongCongratsButton.gameObject.SetActive(true);
         Exclamation.gameObject.SetActive(true);
-        StartCoroutine(WaitForClick("DragSequencePage"));
+        checkButton.gameObject.SetActive(true);
+        checkButtonText.text = "Tentar Novamente";  // Muda o texto do botão para "Tentar Novamente"
+
+        checkButton.onClick.RemoveAllListeners();  // Remove qualquer outro evento registrado no botão
+        checkButton.onClick.AddListener(() => RestartLevel());  // Adiciona um listener para reiniciar a fase
     }
+
+
+
+
 
     private IEnumerator WaitForClick(string sceneToLoad)
     {
@@ -198,31 +213,17 @@ public class CircleDragData : MonoBehaviour
         {
             yield return null;
         }
-
         SceneManager.LoadScene(sceneToLoad);
     }
 
     private void EnableButton()
     {
-        int counter = 0;
-        for (int i = 1; i <= totalQuestions; i++)
+        if(PlayerPrefs.GetInt("TotalCirclesDroped", 0) == 6)
         {
-            if (PlayerPrefs.GetString("CircleSlot" + i) != "null")
-            {
-                counter++;
-            }
+            checkButton.gameObject.SetActive(true);
         }
 
-        if (counter == 6 && UIHelper == 0)
-        {
-            checkButtonText.text = "Verificar";
-            checkButton.gameObject.SetActive(true);
-            UIHelper++;
-        }
-        else if (UIHelper == 0)
-        {
-            checkButton.gameObject.SetActive(false);
-        }
+
     }
 
     private void FindCircleImages()
@@ -247,6 +248,7 @@ public class CircleDragData : MonoBehaviour
                 circleImages.Add(circleImage); // Adiciona à lista de imagens dos círculos
             }
         }
+
     }
 
     private void HidePopup()
@@ -267,10 +269,11 @@ public class CircleDragData : MonoBehaviour
 
     public void ShowPopup()
     {
+        checkButton.gameObject.SetActive(false);
+        checkButtonText.gameObject.SetActive(false);
         ScoreTable.gameObject.SetActive(true);
         scoreText.gameObject.SetActive(true);
         scoreButton.gameObject.SetActive(true);
-        wrongCongratsButton.gameObject.SetActive(false);
 
 
         SetStars();

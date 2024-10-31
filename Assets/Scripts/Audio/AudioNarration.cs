@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AudioNarration : MonoBehaviour
 {
@@ -7,25 +9,85 @@ public class AudioNarration : MonoBehaviour
 
     private const string VolumePrefKey = "Volume";
 
-    public void PlayNarration()
+    public void PlayNarration(Button clickedButton)
     {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
 
         // Carregar o volume salvo e aplicá-lo ao AudioSource
         float savedVolume = PlayerPrefs.GetFloat(VolumePrefKey, 100f);
-
         SetVolume(savedVolume);
 
-        if (narrationClip != null)
+        // Verificar a cena ativa e definir o índice do áudio correspondente
+        if (SceneManager.GetActiveScene().name == "FoodQuizPage")
         {
-            audioSource.clip = narrationClip[0]; ///////////////////////////////
-            audioSource.Play();
-            Debug.Log("DeuPlay");
+            int questionIndex;
+
+            // Verifica o nome do botão clicado
+            if (clickedButton.name == "AudioButton")
+            {
+                questionIndex = PlayerPrefs.GetInt("FoodQuestionAudioIndex", 0);
+                Debug.Log("Clicou no botão com audio no index "+questionIndex);
+            }
+            else
+            {
+                questionIndex = PlayerPrefs.GetInt("FoodPopupAudioIndex");
+            }
+
+            // Garante que o índice esteja dentro dos limites do array narrationClip
+            if (questionIndex >= 0 && questionIndex < narrationClip.Length)
+            {
+                audioSource.clip = narrationClip[questionIndex];
+            }
+            else
+            {
+                Debug.LogWarning("Índice fora dos limites ou nenhum clipe de narração foi atribuído para FoodQuizPage.");
+            }
+        }
+        else if (SceneManager.GetActiveScene().name == "SpeechBubblePage" || SceneManager.GetActiveScene().name == "SpeechBubblePage3")
+        {
+            int speechBubbleIndex = PlayerPrefs.GetInt("SpeechBubbleAudioIndex", 0);
+            Debug.Log("INDEXXXXXXXXXXXXXXXXXXXX "+speechBubbleIndex);
+
+            if (speechBubbleIndex >= 0 && speechBubbleIndex < narrationClip.Length)
+            {
+                audioSource.clip = narrationClip[speechBubbleIndex];
+            }
+            else
+            {
+                Debug.LogWarning("Índice fora dos limites ou nenhum clipe de narração foi atribuído para SpeechBubblePage.");
+            }
+        }
+        else if (SceneManager.GetActiveScene().name == "QuizPage")
+        {
+            int quizIndex = PlayerPrefs.GetInt("QuizAudioIndex", 0);
+
+            if (quizIndex >= 0 && quizIndex < narrationClip.Length)
+            {
+                audioSource.clip = narrationClip[quizIndex];
+            }
+            else
+            {
+                Debug.LogWarning("Índice fora dos limites ou nenhum clipe de narração foi atribuído para QuizPage.");
+            }
         }
         else
         {
-            Debug.LogWarning("Nenhum clipe de narração foi atribuído.");
+            // Código original: toca o primeiro áudio do array
+            if (narrationClip != null && narrationClip.Length > 0)
+            {
+                audioSource.clip = narrationClip[0];
+            }
+            else
+            {
+                Debug.LogWarning("Nenhum clipe de narração foi atribuído.");
+            }
+        }
+
+        // Reproduz o áudio, se um clipe válido foi definido
+        if (audioSource.clip != null)
+        {
+            audioSource.Play();
         }
     }
 
@@ -37,7 +99,15 @@ public class AudioNarration : MonoBehaviour
         // Normaliza o volume para o AudioSource (0 a 1)
         audioSource.volume = volume / 200f;
 
-
         Debug.Log("Volume configurado: " + volume + " (AudioSource volume: " + audioSource.volume + ")");
+    }
+
+    public void ResetAudioIndex()
+    {
+
+        Debug.Log("Resetou adioindex");
+        PlayerPrefs.SetInt("SpeechBubbleAudioIndex", 0);
+        PlayerPrefs.Save();
+
     }
 }
