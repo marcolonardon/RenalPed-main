@@ -6,13 +6,22 @@ public class AudioNarration : MonoBehaviour
 {
     public AudioClip[] narrationClip; // O clipe de áudio que será reproduzido
     private AudioSource audioSource;
-
     private const string VolumePrefKey = "Volume";
 
-    public void PlayNarration(Button clickedButton)
+    void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
+    }
+
+    public void PlayNarration(Button clickedButton)
+    {
+        // Se o áudio estiver tocando, pare-o e saia do método
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            return;
+        }
 
         // Carregar o volume salvo e aplicá-lo ao AudioSource
         float savedVolume = PlayerPrefs.GetFloat(VolumePrefKey, 100f);
@@ -27,7 +36,7 @@ public class AudioNarration : MonoBehaviour
             if (clickedButton.name == "AudioButton")
             {
                 questionIndex = PlayerPrefs.GetInt("FoodQuestionAudioIndex", 0);
-                Debug.Log("Clicou no botão com audio no index "+questionIndex);
+                Debug.Log("Clicou no botão com audio no index " + questionIndex);
             }
             else
             {
@@ -47,7 +56,7 @@ public class AudioNarration : MonoBehaviour
         else if (SceneManager.GetActiveScene().name == "SpeechBubblePage" || SceneManager.GetActiveScene().name == "SpeechBubblePage3")
         {
             int speechBubbleIndex = PlayerPrefs.GetInt("SpeechBubbleAudioIndex", 0);
-            Debug.Log("INDEXXXXXXXXXXXXXXXXXXXX "+speechBubbleIndex);
+            Debug.Log("INDEXXXXXXXXXXXXXXXXXXXX " + speechBubbleIndex);
 
             if (speechBubbleIndex >= 0 && speechBubbleIndex < narrationClip.Length)
             {
@@ -84,7 +93,7 @@ public class AudioNarration : MonoBehaviour
             }
         }
 
-        // Reproduz o áudio, se um clipe válido foi definido
+        // Reproduz o áudio desde o início
         if (audioSource.clip != null)
         {
             audioSource.Play();
@@ -104,10 +113,8 @@ public class AudioNarration : MonoBehaviour
 
     public void ResetAudioIndex()
     {
-
-        Debug.Log("Resetou adioindex");
+        Debug.Log("Resetou o índice de áudio");
         PlayerPrefs.SetInt("SpeechBubbleAudioIndex", 0);
         PlayerPrefs.Save();
-
     }
 }

@@ -41,7 +41,7 @@ public class MenuPopup : MonoBehaviour
         });
 
         _infoButton.onClick.AddListener(() => {
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("InfoPage");
             GameObject.Destroy(this.gameObject);
         });
 

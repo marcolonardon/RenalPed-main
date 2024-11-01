@@ -12,7 +12,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
     public string[] expectedTags; // Array de tags esperadas dos objetos
     public bool keepActivated;
-    private int expectedTotal = 7;
+    private int expectedTotal = 8;
 
     private void Start()
     {

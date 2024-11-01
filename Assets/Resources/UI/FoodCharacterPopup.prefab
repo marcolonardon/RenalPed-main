@@ -186,7 +186,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 7290a52bca49ee64c8b8b180de872d9b, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -541,7 +541,7 @@ PrefabInstance:
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[2]'
       value: 
-      objectReference: {fileID: 8300000, guid: d8d8840221d02a14f8e60293b9e2d11b, type: 3}
+      objectReference: {fileID: 8300000, guid: 5fa1849d226ebca4a8f1027d273d7cfa, type: 3}
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[3]'
       value: 
