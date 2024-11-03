@@ -907,19 +907,19 @@ PrefabInstance:
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: 4ab3efa4e3455d7448f076d7693380c1, type: 3}
+      objectReference: {fileID: 8300000, guid: 68a00f688de23a5429e1e7b4a0e75937, type: 3}
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[1]'
       value: 
-      objectReference: {fileID: 8300000, guid: 73ff6a89cf111d240847c1f90b24db53, type: 3}
+      objectReference: {fileID: 8300000, guid: 9b0eab24ae3bfa245877a58fd6d52582, type: 3}
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[2]'
       value: 
-      objectReference: {fileID: 8300000, guid: 905e18a7ed69f5244809771424489264, type: 3}
+      objectReference: {fileID: 8300000, guid: 6f56eabb9f319dc47845803954a755fe, type: 3}
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[3]'
       value: 
-      objectReference: {fileID: 8300000, guid: 51126620f87618045a73c9dd854a0e72, type: 3}
+      objectReference: {fileID: 8300000, guid: e24a43456c2812d40ac883fe9cbc44e2, type: 3}
     - target: {fileID: 8015506583788748562, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: m_Name
       value: AudioButton

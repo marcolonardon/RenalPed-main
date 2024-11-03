@@ -1764,7 +1764,7 @@ PrefabInstance:
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: 3b4791a8bad4fec45b92c3d4f8fa2c14, type: 3}
+      objectReference: {fileID: 8300000, guid: ed5f46d6a54a05e4c81eed56a599f3e5, type: 3}
     - target: {fileID: 8015506583788748562, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: m_Name
       value: AudioButton

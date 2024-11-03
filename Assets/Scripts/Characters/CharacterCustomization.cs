@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class CharacterCustomization : MonoBehaviour
 {
+    public GameObject[] CheckIcon;
+    public int totalOptions;
+
     // Referências aos GameObjects que representam as partes do personagem
     public Image bodyImage;
     public Image faceImage;
@@ -34,8 +37,11 @@ public class CharacterCustomization : MonoBehaviour
 
     private void Start()
     {
+        RemoveSelectedIcon();
         LoadCharacterCustomization();
         UpdateCharacterAppearance();
+        
+        
     }
 
     // Métodos para alterar as opções diretamente
@@ -130,7 +136,7 @@ public class CharacterCustomization : MonoBehaviour
         if (index >= 0 && bodyOptions[index] != null)
         {
             bodyImage.sprite = bodyOptions[index];
-            bodyImage.color = Color.white; // Restaura a cor ao definir uma nova sprite
+            //bodyImage.color = Color.white; // Restaura a cor ao definir uma nova sprite
         }
     }
 
@@ -209,6 +215,11 @@ public class CharacterCustomization : MonoBehaviour
         currentBodyColorIndex = PlayerPrefs.GetInt("BodyColorIndex", 0);
         currentClothesIndex = PlayerPrefs.GetInt("ClothesIndex", 0);
         currentAccessoryIndex = PlayerPrefs.GetInt("AccessoryIndex", 0);
+
+        if (CheckIcon.Length > 0)
+        {
+            CheckIcon[currentBodyIndex].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        }
     }
 
     // Função para atualizar a aparência do personagem com base nas configurações salvas
@@ -284,4 +295,40 @@ public class CharacterCustomization : MonoBehaviour
     {
         characterNameInputField.text = PlayerPrefs.GetString("CharacterName");
     }
+
+    public void SetIcon(int numButton)
+    {
+        
+
+        
+        if (numButton >= 0 && numButton < totalOptions && CheckIcon != null && CheckIcon.Length > numButton)
+        {
+            // Percorre todos os ícones
+            for (int i = 0; i < CheckIcon.Length; i++)
+            {
+                // Se for o botão selecionado, ajusta a opacidade para 100%
+                // Não estou desativando por conta da grid
+                if (i == numButton)
+                {
+                    CheckIcon[i].GetComponent<Image>().color = new Color(1, 1, 1, 1); 
+                }
+                else
+                {
+                    CheckIcon[i].GetComponent<Image>().color = new Color(1, 1, 1, 0); // Transparente
+                }
+            }
+        }
+    }
+
+    private void RemoveSelectedIcon()
+    {
+        if (CheckIcon != null)
+        {
+            for (int i = 0; i < CheckIcon.Length; i++)
+            {
+                CheckIcon[i].GetComponent<Image>().color = new Color(1, 1, 1, 0);// Não estou desativando por conta da grid
+            }
+        }
+    }
+
 }

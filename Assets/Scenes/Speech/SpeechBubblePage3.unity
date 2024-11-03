@@ -873,11 +873,11 @@ PrefabInstance:
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: a48472870ae5126479d8cd4d94d68a68, type: 3}
+      objectReference: {fileID: 8300000, guid: 9064ec219324e174f9635d02c8a183c3, type: 3}
     - target: {fileID: 6362682053709108261, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: 'narrationClip.Array.data[1]'
       value: 
-      objectReference: {fileID: 8300000, guid: 0038e42e0c14c914e9b978c4db412ea4, type: 3}
+      objectReference: {fileID: 8300000, guid: 753d95f3079fa1443aeb1a676dccb381, type: 3}
     - target: {fileID: 8015506583788748562, guid: 7b60e288add7f884f8fb88187ad9df7f, type: 3}
       propertyPath: m_Name
       value: AudioButton

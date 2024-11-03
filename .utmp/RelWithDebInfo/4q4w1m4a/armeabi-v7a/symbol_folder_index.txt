@@ -1,0 +1,1 @@
+C:\RenalPed-BKP2\RenalPed-main-main\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\4q4w1m4a\obj\armeabi-v7a

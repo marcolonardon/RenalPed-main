@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +13,8 @@ public class SpeechBubble : MonoBehaviour
     public string[] topText;
     public string sceneToLoad;
 
-    public Image image1;
-    public Image image2;
+    public Image[] images;
 
-    public int loadImage1At;
-    public int loadImage2At;
 
     public Button targetButton; // Botão específico para transição de cena
 
@@ -31,10 +29,7 @@ public class SpeechBubble : MonoBehaviour
         TopBubbleText.text = topText[0];
 
         // Desativa as imagens no início
-        if (image1 != null)
-            image1.gameObject.SetActive(false);
-        if (image2 != null)
-            image2.gameObject.SetActive(false);
+        RemoveImages();
 
         // Associa o botão ao método de mudança de cena
         if (targetButton != null)
@@ -42,6 +37,11 @@ public class SpeechBubble : MonoBehaviour
             targetButton.gameObject.SetActive(false);
             targetButton.onClick.AddListener(() => StartCoroutine(LoadNextScene()));
         }
+    }
+
+    void Update()
+    {
+       // PrintImages();
     }
 
     public void onClick()
@@ -66,15 +66,7 @@ public class SpeechBubble : MonoBehaviour
             TopBubbleText.text = topText[topIndex];
 
             // Verifica se o índice atual é o índice em que as imagens devem ser ativadas
-            if (mainIndex == loadImage1At)
-            {
-                image1.gameObject.SetActive(true);
-            }
-
-            if (mainIndex == loadImage2At)
-            {
-                image2.gameObject.SetActive(true);
-            }
+            PrintImages();
 
             StartMission();
         }
@@ -99,5 +91,51 @@ public class SpeechBubble : MonoBehaviour
     {
         SceneManager.LoadScene(sceneToLoad);
         yield return null;
+    }
+
+    private void PrintImages()
+    {
+        int index = PlayerPrefs.GetInt("SpeechBubbleAudioIndex", 0);
+        switch (index)
+        {
+            case 2:
+                images[0].gameObject.SetActive(true);
+                images[1].gameObject.SetActive(false);
+                images[2].gameObject.SetActive(false);
+                images[3].gameObject.SetActive(false);
+                break;
+            case 3:
+                images[0].gameObject.SetActive(false);
+                images[1].gameObject.SetActive(true);
+                images[2].gameObject.SetActive(false);
+                images[3].gameObject.SetActive(false);
+                break;
+            case 4:
+                images[0].gameObject.SetActive(false);
+                images[1].gameObject.SetActive(false);
+                images[2].gameObject.SetActive(true);
+                images[3].gameObject.SetActive(false);
+                break;
+            case 5:
+                images[0].gameObject.SetActive(false);
+                images[1].gameObject.SetActive(false);
+                images[2].gameObject.SetActive(false);
+                images[3].gameObject.SetActive(true);
+                break;
+            default:
+                RemoveImages();
+                break;
+        }
+    }
+
+    private void RemoveImages()
+    {
+        if (images != null)
+        {
+            for (int i = 0; i < images.Length; i++)
+            {
+                images[i].gameObject.SetActive(false);
+            }
+        }
     }
 }
