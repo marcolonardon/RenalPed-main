@@ -245,7 +245,7 @@ MonoBehaviour:
   - {fileID: 1652998857}
   - {fileID: 1114302112}
   - {fileID: 1335674325}
-  totalOptions: 4
+  CheckIcon2: []
   bodyImage: {fileID: 1535454599}
   faceImage: {fileID: 0}
   hairImage: {fileID: 0}
@@ -607,7 +607,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 118482080}
         m_TargetAssemblyTypeName: CharacterCustomization, Assembly-CSharp
-        m_MethodName: SetIcon
+        m_MethodName: SetIconType1
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1344,7 +1344,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 118482080}
         m_TargetAssemblyTypeName: CharacterCustomization, Assembly-CSharp
-        m_MethodName: SetIcon
+        m_MethodName: SetIconType1
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2042,7 +2042,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 118482080}
         m_TargetAssemblyTypeName: CharacterCustomization, Assembly-CSharp
-        m_MethodName: SetIcon
+        m_MethodName: SetIconType1
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2250,7 +2250,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 118482080}
         m_TargetAssemblyTypeName: CharacterCustomization, Assembly-CSharp
-        m_MethodName: SetIcon
+        m_MethodName: SetIconType1
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

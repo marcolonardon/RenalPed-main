@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class CharacterCustomization : MonoBehaviour
 {
     public GameObject[] CheckIcon;
-    public int totalOptions;
+    public GameObject[] CheckIcon2;
+    private int totalOptions;
+    private int totalOptions2;
 
     // Referências aos GameObjects que representam as partes do personagem
     public Image bodyImage;
@@ -169,10 +171,10 @@ public class CharacterCustomization : MonoBehaviour
 
     private void UpdateAccessory(int index)
     {
-        Debug.Log("Index do update acessory: " + index);
+        //Debug.Log("Index do update acessory: " + index);
         if (index >= 0 && accessoryOptions[index] != null)
         {
-            Debug.Log("Entrou no if do update acessory: " + index);
+            //Debug.Log("Entrou no if do update acessory: " + index);
             accessoryImage.sprite = accessoryOptions[index];
             accessoryImage.color = Color.white; // Restaura a cor ao definir uma nova sprite
         }
@@ -216,10 +218,46 @@ public class CharacterCustomization : MonoBehaviour
         currentClothesIndex = PlayerPrefs.GetInt("ClothesIndex", 0);
         currentAccessoryIndex = PlayerPrefs.GetInt("AccessoryIndex", 0);
 
-        if (CheckIcon.Length > 0)
+        LoadCharacterSelection();
+    }
+
+    private void LoadCharacterSelection()
+    {
+        if(SceneManager.GetActiveScene().name == "CharacterPage1")
         {
-            CheckIcon[currentBodyIndex].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            if (CheckIcon.Length > 0)
+            {
+                CheckIcon[currentBodyIndex].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
+        }else if(SceneManager.GetActiveScene().name == "CharacterPage2")
+        {
+            if (CheckIcon.Length > 0)
+            {
+                CheckIcon[currentFaceIndex].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                
+            }
+
+            if(CheckIcon2.Length > 0)
+            {
+                CheckIcon2[currentHairIndex].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                //Debug.Log("Index do cabeloo " + currentHairIndex);
+            }
+        }else if(SceneManager.GetActiveScene().name == "CharacterPage3")
+        {
+            if (CheckIcon.Length > 0)
+            {
+                CheckIcon[currentClothesIndex].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
+            }
+
+            if (CheckIcon2.Length > 0)
+            {
+                if(currentAccessoryIndex>=0)
+                    CheckIcon2[currentAccessoryIndex].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                Debug.Log("Index do cabeloo " + currentHairIndex + 5);
+            }
         }
+
     }
 
     // Função para atualizar a aparência do personagem com base nas configurações salvas
@@ -296,26 +334,31 @@ public class CharacterCustomization : MonoBehaviour
         characterNameInputField.text = PlayerPrefs.GetString("CharacterName");
     }
 
-    public void SetIcon(int numButton)
+    // Função para configurar o ícone do Tipo 1
+    public void SetIconType1(int numButton)
     {
-        
+        SetIconOpacity(CheckIcon, numButton);
+    }
 
-        
-        if (numButton >= 0 && numButton < totalOptions && CheckIcon != null && CheckIcon.Length > numButton)
+    // Função para configurar o ícone do Tipo 2
+    public void SetIconType2(int numButton)
+    {
+        SetIconOpacity(CheckIcon2, numButton);
+    }
+
+    // Função genérica para alterar a opacidade dos ícones
+    private void SetIconOpacity(GameObject[] icons, int selectedIndex)
+    {
+        if (icons == null || icons.Length == 0) return;
+
+        for (int i = 0; i < icons.Length; i++)
         {
-            // Percorre todos os ícones
-            for (int i = 0; i < CheckIcon.Length; i++)
+            // Define a opacidade para 100% se o índice corresponder ao botão selecionado, ou 0% caso contrário
+            float opacity = (i == selectedIndex) ? 1f : 0f;
+            Image iconImage = icons[i].GetComponent<Image>();
+            if (iconImage != null)
             {
-                // Se for o botão selecionado, ajusta a opacidade para 100%
-                // Não estou desativando por conta da grid
-                if (i == numButton)
-                {
-                    CheckIcon[i].GetComponent<Image>().color = new Color(1, 1, 1, 1); 
-                }
-                else
-                {
-                    CheckIcon[i].GetComponent<Image>().color = new Color(1, 1, 1, 0); // Transparente
-                }
+                iconImage.color = new Color(1, 1, 1, opacity);
             }
         }
     }
@@ -324,9 +367,19 @@ public class CharacterCustomization : MonoBehaviour
     {
         if (CheckIcon != null)
         {
+            totalOptions = CheckIcon.Length;
             for (int i = 0; i < CheckIcon.Length; i++)
             {
                 CheckIcon[i].GetComponent<Image>().color = new Color(1, 1, 1, 0);// Não estou desativando por conta da grid
+            }
+        }
+
+        if (CheckIcon2 != null)
+        {
+            totalOptions2 = CheckIcon2.Length;
+            for (int i = 0; i < CheckIcon2.Length; i++)
+            {
+                CheckIcon2[i].GetComponent<Image>().color = new Color(1, 1, 1, 0);// Não estou desativando por conta da grid
             }
         }
     }

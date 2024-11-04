@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class SpeechBubble : MonoBehaviour
 {
+    public GameObject BackButton;
     public Text MainBubbleText;
     public Text TopBubbleText;
     public string[] mainText;
@@ -25,6 +26,12 @@ public class SpeechBubble : MonoBehaviour
 
     void Start()
     {
+        if (BackButton != null)
+        {
+            if (PlayerPrefs.GetInt("SpeechBubbleAudioIndex") == 0)
+                BackButton.SetActive(true);
+        }
+
         MainBubbleText.text = mainText[0];
         TopBubbleText.text = topText[0];
 
@@ -39,15 +46,12 @@ public class SpeechBubble : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-       // PrintImages();
-    }
 
     public void onClick()
     {
         if (isClickAllowed)
         {
+            StopAllAudio();
             isClickAllowed = false;
             StartCoroutine(HandleClick());
 
@@ -69,6 +73,12 @@ public class SpeechBubble : MonoBehaviour
             PrintImages();
 
             StartMission();
+        }
+
+        if (BackButton != null)
+        {
+            if(PlayerPrefs.GetInt("SpeechBubbleAudioIndex") != 0)
+                BackButton.SetActive(false);
         }
     }
 
@@ -135,6 +145,22 @@ public class SpeechBubble : MonoBehaviour
             for (int i = 0; i < images.Length; i++)
             {
                 images[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+
+    public void StopAllAudio()
+    {
+        // Encontra todos os AudioSource na cena
+        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+
+        // Percorre todos os AudioSource e para o áudio
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
             }
         }
     }

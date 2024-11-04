@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cc66703bdee0df1439ed89eab1f3688d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6ac646a9ad4e39048b10c7a5765e6467, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -427,6 +427,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4a9aa4471999647a06c07c844b450b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CheckIcon: []
+  CheckIcon2: []
   bodyImage: {fileID: 2207531721597655069}
   faceImage: {fileID: 8558716262753500106}
   hairImage: {fileID: 8896591390950137676}
@@ -471,6 +473,8 @@ MonoBehaviour:
   - '#ffe1d2'
   - '#f2c9a7'
   - '#a88c79'
+  characterNameInputField: {fileID: 0}
+  imputFieldNameText: {fileID: 0}
 --- !u!1 &7819953748005084351
 GameObject:
   m_ObjectHideFlags: 0

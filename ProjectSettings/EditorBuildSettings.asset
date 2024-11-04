@@ -119,5 +119,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InfoPage.unity
     guid: 82ec8c4a2fa676e4a947278191b65b7b
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage2.1.unity
+    guid: 247e42341176d8748be358054f789c1f
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage2.3.unity
+    guid: 1284f7738aedd364293494a4eef31ea4
+  - enabled: 1
+    path: Assets/Scenes/Speech/SpeechBubblePage2.2.unity
+    guid: bcef5d77b85a4f34e9c6103898cd5e26
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

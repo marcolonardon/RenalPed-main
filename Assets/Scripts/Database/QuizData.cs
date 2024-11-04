@@ -159,6 +159,7 @@ public class QuizData : MonoBehaviour
 
     public void nextQuizQuestion()
     {
+        StopAllAudio();
         UIAnimationsDisable();
         ResetAnswerColors();
         FadeIn.SetActive(false);
@@ -298,7 +299,20 @@ public class QuizData : MonoBehaviour
     }
 
 
+    public void StopAllAudio()
+    {
+        // Encontra todos os AudioSource na cena
+        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
 
+        // Percorre todos os AudioSource e para o áudio
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
 
 
 }
